@@ -1,0 +1,17 @@
+﻿
+@{
+    ViewBag.Title = "Tomasos Onlinepizza";
+}
+
+@section style{
+    <link rel="stylesheet" href="~/css/Index.css" />
+}
+<div id="wrapper">
+    <h1>Prova våra goda pizzor!</h1>
+    <div id="buttons">
+        <a href="@Url.Action("Login", "Home")" class="btn btn-danger" role="button" aria-pressed="true">Logga in</a>
+        <a href="@Url.Action("NewCustomer", "Home")" class="btn btn-danger" role="button" aria-pressed="true">Öppna konto</a>
+    </div>
+</div>
+
+

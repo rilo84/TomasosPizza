@@ -1,0 +1,24 @@
+﻿#wrapper {
+    width: 100%;
+    height: 40%;
+    background-color: rgba(255, 255, 255,0.5);
+    display: flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items: center;
+}
+
+#mainContent {
+    background-image: url(../images/pizza.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding:0;
+}
+
+.btn{
+    margin:10px;
+    width:200px;
+}

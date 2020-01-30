@@ -1,0 +1,35 @@
+﻿#newCustomerContainer, #inputSection1, #inputSection2 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#newCustomerContainer {
+   margin-top:40px;
+}
+
+#inputSection1, #inputSection2 {
+    margin:20px;
+}
+
+#newCustomer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background-color: #B60609;
+    padding: 20px;
+    color:white;
+}
+
+#saveBtnContainer{
+    grid-column: 1/-1;
+    display:flex;
+    justify-content:center;
+}
+
+#saveBtn {
+    border: none;
+    background-color: #F3D8A6;
+    margin: 20px;
+    color: black;
+}
