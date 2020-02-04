@@ -1,0 +1,42 @@
+﻿#mainContent{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding-top:20px;
+}
+
+#sideBar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20px;
+}
+
+.foodWrapper {
+    display:grid;
+    grid-template-columns:2fr,1fr,1fr;
+    grid-template-rows:1fr;
+    justify-content:space-between;
+    width: 600px;
+    height: 80px;
+    background-color: #B60609;
+    margin:10px;
+    border-radius:5px;
+    color:white;
+    padding:10px;
+}
+
+.foodDescription{
+   display:grid;
+   grid-column:1/3;
+}
+
+.foodAmount {
+    display: grid;
+    grid-column: 2/3;
+}
+
+.foodBuy {
+    display: grid;
+    grid-column: 3/3;
+}

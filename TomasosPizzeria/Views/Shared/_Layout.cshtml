@@ -17,13 +17,7 @@
             <partial name="_Navbar">
         </div>
         <div id="mainRow"class="row">
-            <div id="mainContent" class="col-sm col-lg-10">
                 @RenderBody()
-            </div>
-            <div id="sideBar" class="col-sm">
-                @RenderSection("order",required:false)
-                <partial name="_SideBar">
-            </div>
         </div>
     </div>
 

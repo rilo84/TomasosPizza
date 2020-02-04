@@ -1,0 +1,37 @@
+﻿@model TomasosPizzeria.ViewModels.Menu
+
+@{
+    ViewBag.Title = "Order";
+}
+
+@section style{
+    <link rel="stylesheet" href="~/css/Order.css" />
+}
+
+<div id="mainContent" class="col-sm col-lg-10">
+    <h1>Beställning</h1>
+    @foreach (var category in Model.FoodCategory)
+    {
+        <h2>@category.CategoryName</h2>
+        @foreach (var food in category.FoodItems)
+        {
+            <div class="foodWrapper">
+                <div id="foodDescription">
+                    <h5>@food.Name</h5>
+                    <p>Innehåll: @food.Ingredients</p>
+                </div>
+                <div id="foodAmount">
+                    <p>amount</p>
+                </div>
+                <div id="foodBuy">
+                    <p>buy</p>
+                </div>
+            </div>
+        }
+    }
+</div>
+<div id="sideBar" class="col-sm col-lg-2">
+    <h4>Din beställning:</h4>
+    <partial name="_CurrentOrder">
+</div>            
+
