@@ -8,5 +8,10 @@ namespace TomasosPizzeria.Data
 {
     public class ApplicationUser:IdentityUser
     {
+        public string Name { get; set; }
+        public string Adress { get; set; }
+        public string PostalNumber { get; set; }
+        public string City { get; set; }
+        public int BonusPoints { get; set; }
     }
 }

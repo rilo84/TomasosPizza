@@ -14,9 +14,9 @@
 #newCustomer {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    background-color: #B60609;
+    background-color: white;
     padding: 20px;
-    color:white;
+    color:black;
 }
 
 #saveBtnContainer{
