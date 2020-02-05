@@ -11,6 +11,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using TomasosPizzeria.Models;
 using TomasosPizzeria.Repositories;
+using TomasosPizzeria.Data;
+using Microsoft.AspNetCore.Identity;
 
 namespace TomasosPizzeria
 {
@@ -28,6 +30,13 @@ namespace TomasosPizzeria
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc(opt => opt.EnableEndpointRouting = false);
+            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer
+            (_configuration.GetConnectionString("Default")));
+
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+            .AddEntityFrameworkStores<ApplicationDbContext>()
+            .AddDefaultTokenProviders();
+
             services.AddTransient<ICustomerRepository, CustomerRepository>();
             services.AddTransient<IFoodRepository, FoodRepository>();
 
@@ -42,6 +51,8 @@ namespace TomasosPizzeria
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseSession();
+            app.UseAuthentication();
+            app.UseStaticFiles();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
@@ -50,7 +61,7 @@ namespace TomasosPizzeria
                     );
             });
 
-            app.UseStaticFiles();
+            
 
             
 
