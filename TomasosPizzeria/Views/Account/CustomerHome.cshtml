@@ -1,0 +1,14 @@
+﻿@model ApplicationUser
+
+@{
+    ViewBag.Title = "Kundsidan";
+}
+
+@section style{
+    <link rel="stylesheet" href="~/css/CustomerPage.css" />
+}
+
+<h1>Välkommen @Model.Name</h1>
+<button type="button" class="btn btn-danger">Beställ mat</button>
+<button type="button" class="btn btn-danger">Ändra kontaktuppgifter</button>
+<p>@ViewBag.Message</p>
