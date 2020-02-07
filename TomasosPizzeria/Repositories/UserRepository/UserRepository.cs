@@ -19,19 +19,8 @@ namespace TomasosPizzeria.Repositories
             this.signInManager = signInManager;
         }
 
-        public Task<IdentityResult> CreateUser(RegisterViewModel model)
+        public Task<IdentityResult> RegisterUser(ApplicationUser user, RegisterViewModel model)
         {
-            var user = new ApplicationUser
-            {
-                Name = model.Namn,
-                UserName = model.AnvandarNamn,
-                Email = model.Email,
-                PhoneNumber = model.Telefon,
-                Adress = model.Gatuadress,
-                PostalNumber = model.Postnr,
-                City = model.Postort,
-            };
-
             return userManager.CreateAsync(user, model.Losenord);
         }
 
@@ -53,6 +42,25 @@ namespace TomasosPizzeria.Repositories
         public Task<SignInResult> SignInUser(LoginViewModel model)
         {
             return signInManager.PasswordSignInAsync(model.AnvandarNamn, model.Losenord, false, false);
+        }
+
+        public ApplicationUser CreateUser(RegisterViewModel model)
+        {
+            return new ApplicationUser
+            {
+                Name = model.Namn,
+                UserName = model.AnvandarNamn,
+                Email = model.Email,
+                PhoneNumber = model.Telefon,
+                Adress = model.Gatuadress,
+                PostalNumber = model.Postnr,
+                City = model.Postort,
+            };
+        }
+
+        public Task<IdentityResult> SetUserRole(ApplicationUser user, string roleName)
+        {
+            return userManager.AddToRoleAsync(user, roleName);
         }
     }
 }

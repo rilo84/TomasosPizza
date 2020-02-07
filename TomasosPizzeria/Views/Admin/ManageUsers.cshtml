@@ -1,4 +1,5 @@
 ﻿@model UserViewModel
+@inject  UserManager<ApplicationUser> userManager;
 
 @{
     ViewBag.Title = "Admin";
@@ -17,12 +18,53 @@
 
     <div class="row">
         <div class="col mt-3">
-            <ul>
-                @foreach (var user in Model.Users)
-                {
-                    <li>@user.Name</li>
-                }
-            </ul>
-        </div>
+            @foreach (var role in Model.Roles)
+            {
+                <h4>@role.Name</h4>
+
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">Namn</th>
+                            <th scope="col">Editera</th>
+                            <th scope="col">Ta bort</th>
+                            <th scope="col">Ändra medlemskap</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="form-group">
+                                    <select class="form-control" id="userSelect">
+                                        @foreach (var user in Model.Users)
+                                        {
+                                            if (await userManager.IsInRoleAsync(user, role.Name))
+                                            {
+                                                <option>@user.Name</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+
+                            </td>
+                            <td><button class="btn btn-danger userManagementBtn">Editera</button></td>
+                            <td><button class="btn btn-danger userManagementBtn">Ta bort</button></td>
+                            <td>
+                                <div class="form-group">
+                                    <select class="form-control" id="userSelect">
+                                        @foreach (var roles in Model.Roles)
+	                                    {
+                                            <option>@roles.Name</option>
+	                                    }
+                                    </select>
+                                </div>
+                            </td>
+                            <td><button class="btn btn-danger userManagementBtn">Ändra</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+        }
+                    
+            </div>
     </div>
 </div>

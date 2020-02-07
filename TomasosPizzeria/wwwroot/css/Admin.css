@@ -1,3 +1,11 @@
-﻿.btn{
+﻿.adminHomeBtn{
     width:400px;
+}
+
+.userManagementBtn{
+    width:100px;
+}
+
+#userSelect{
+    width:200px;
 }

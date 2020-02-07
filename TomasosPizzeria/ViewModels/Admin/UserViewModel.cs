@@ -10,5 +10,6 @@ namespace TomasosPizzeria.ViewModels
     public class UserViewModel
     {
         public List<ApplicationUser> Users { get; set; }
+        public List<IdentityRole> Roles { get; set; }
     }
 }

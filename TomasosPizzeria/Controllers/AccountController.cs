@@ -34,17 +34,24 @@ namespace TomasosPizzeria.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = await userRepository.CreateUser(model);
-          
-                if (result.Succeeded)
+                var user = userRepository.CreateUser(model);
+
+                var userCreationResult = await userRepository.RegisterUser(user,model);
+         
+                if (userCreationResult.Succeeded)
                 {
-                    await userRepository.SignInUser(model);
-                    var customer = await userRepository.GetUser(model);
+                    var roleAssignmentResult = await userRepository.SetUserRole(user, "RegularUser");
+                    if (roleAssignmentResult.Succeeded)
+                    {
+                        await userRepository.SignInUser(model);
+                        var customer = await userRepository.GetUser(model);
 
-                    var customerJson = JsonConvert.SerializeObject(customer);
-                    HttpContext.Session.SetString("customerData", customerJson);
+                        var customerJson = JsonConvert.SerializeObject(customer);
+                        HttpContext.Session.SetString("customerData", customerJson);
 
-                    return RedirectToAction("CustomerHome");
+                        return RedirectToAction("CustomerHome");
+                    }
+                    
                 }
             }
             return View();

@@ -40,8 +40,9 @@ namespace TomasosPizzeria.Controllers
         public IActionResult ManageUsers()
         {
             var model = new UserViewModel();
-
+            
             model.Users = userManager.Users.ToList();
+            model.Roles = roleManager.Roles.ToList();
 
             return View(model);
         }
