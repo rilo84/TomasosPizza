@@ -1,4 +1,4 @@
-﻿@model TomasosPizzeria.ViewModels.Menu
+﻿@model OrderViewModel
 
 @{
     ViewBag.Title = "Order";
@@ -10,7 +10,7 @@
 
 <div id="mainContent" class="col-sm col-lg-10">
     <h1>Beställning</h1>
-    @foreach (var category in Model.FoodCategory)
+    @foreach (var category in Model.Menu.FoodCategory)
     {
         <h2>@category.CategoryName</h2>
         @foreach (var food in category.FoodItems)

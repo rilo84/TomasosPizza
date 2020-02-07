@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using TomasosPizzeria.Repositories;
+using TomasosPizzeria.ViewModels;
 
 namespace TomasosPizzeria.Controllers
 {
@@ -16,7 +17,9 @@ namespace TomasosPizzeria.Controllers
         }
         public IActionResult Order()
         {
-            var model = _foodRepository.GetMenu();
+            var model = new OrderViewModel();
+            model.Menu = _foodRepository.GetMenu();
+            
             return View(model);
         }
     }
