@@ -1,5 +1,5 @@
 ﻿@model UserViewModel
-@inject  UserManager<ApplicationUser> userManager;
+@inject UserManager<ApplicationUser> userManager;
 
 @{
     ViewBag.Title = "Admin";
@@ -8,6 +8,8 @@
 @section style{
     <link rel="stylesheet" href="~/css/Admin.css" />
 }
+
+
 
 <div class="container d-flex flex-column align-items-center">
     <div class="row">
@@ -27,18 +29,17 @@
                         <thead>
                             <tr>
                                 <th scope="col">Namn</th>
-                                <th scope="col">Editera</th>
-                                <th scope="col">Ta bort</th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
                                 <th scope="col">Ändra medlemskap</th>
+                                <th scope="col"></th>
                             </tr>
                         </thead>
                         <tbody>
-
                             <tr>
-
                                 <td>
                                     <div class="form-group">
-                                        <select class="form-control" id="userSelect" asp-for="User">
+                                        <select class="form-control userSelect" id=@role.Name asp-for="User" name="User">
                                             @foreach (var user in Model.Users)
                                             {
                                                 if (await userManager.IsInRoleAsync(user, role.Name))
@@ -51,7 +52,17 @@
                                     </div>
 
                                 </td>
-                                <td><button class="btn btn-danger userManagementBtn">Editera</button></td>
+                                <td>
+                                    <a asp-controller="Admin"
+                                       asp-action="UserDetails"
+                                       asp-route-id="fixa"
+                                       data-ajax="true"
+                                       data-ajax-method="GET"
+                                       data-ajax-mode="replace"
+                                       data-ajax-update="#@role.Id"
+                                       class="btn btn-danger userManagementBtn"
+                                       role="button" aria-pressed="true">Detaljer</a>
+                                </td>
                                 <td><button class="btn btn-danger userManagementBtn">Ta bort</button></td>
                                 <td>
                                     <div class="form-group">
@@ -70,8 +81,8 @@
                         </tbody>
                     </table>
                 </form>
+                <div id=@role.Id></div>
             }
-
         </div>
     </div>
 </div>

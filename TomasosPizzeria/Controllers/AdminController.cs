@@ -82,7 +82,15 @@ namespace TomasosPizzeria.Controllers
                 }
             }
 
-            return View();
+            return RedirectToAction("Manageusers");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> UserDetails(string User)
+        {
+            var user = await userManager.FindByIdAsync(User);
+
+            return ViewComponent("UserDetails", user);
         }
     }
 }
