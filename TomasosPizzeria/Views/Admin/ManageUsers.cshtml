@@ -9,20 +9,18 @@
     <link rel="stylesheet" href="~/css/Admin.css" />
 }
 
-
-
 <div class="container d-flex flex-column align-items-center">
     <div class="row">
-        <div class="col mt-5">
+        <div class="col mt-2">
             <h1>Hantera Användare</h1>
         </div>
     </div>
 
     <div class="row">
-        <div class="col mt-3">
+        <div class="col mt-2">
             @foreach (var role in Model.Roles)
             {
-                <h4>@role.Name</h4>
+                <h5>@role.Name</h5>
 
                 <form asp-controller="Admin" asp-action="UpdateUserRole" method="post">
                     <table class="table table-hover">
@@ -39,7 +37,7 @@
                             <tr>
                                 <td>
                                     <div class="form-group">
-                                        <select class="form-control userSelect" id=@role.Name asp-for="User" name="User">
+                                        <select class="form-control userSelect" id="@role.Name-select" asp-for="User">
                                             @foreach (var user in Model.Users)
                                             {
                                                 if (await userManager.IsInRoleAsync(user, role.Name))
@@ -50,16 +48,16 @@
                                         </select>
                                         <span asp-validation-for="User"></span>
                                     </div>
-
                                 </td>
                                 <td>
                                     <a asp-controller="Admin"
                                        asp-action="UserDetails"
-                                       asp-route-id="fixa"
+                                       asp-route-id="@role.Id"
                                        data-ajax="true"
                                        data-ajax-method="GET"
                                        data-ajax-mode="replace"
-                                       data-ajax-update="#@role.Id"
+                                       data-ajax-update="#@role.Name-details"
+                                       id="@role.Name-link"
                                        class="btn btn-danger userManagementBtn"
                                        role="button" aria-pressed="true">Detaljer</a>
                                 </td>
@@ -81,7 +79,31 @@
                         </tbody>
                     </table>
                 </form>
-                <div id=@role.Id></div>
+                <script>
+                    $("#@role.Name-link").mouseover(() => {
+                        var currentSelection = $("#@role.Name-select").children("option:selected").val();
+                        $("#@role.Name-link").attr("href", "/Admin/UserDetails?Id=" + currentSelection);
+                        })
+
+                        var toggle = true;
+
+                        $("#@role.Name-select").change(() => {
+                            $("#@role.Name-details").hide();
+                            toggle = true;
+                        })
+
+                        $("#@role.Name-link").click(() => {
+                            if (!toggle) {
+                                $("#@role.Name-details").hide();
+                                toggle = !toggle;
+                            }
+                            else {
+                                $("#@role.Name-details").show();
+                                toggle = !toggle;
+                            }
+                        })
+                </script>
+                <div id="@role.Name-details"></div>
             }
         </div>
     </div>

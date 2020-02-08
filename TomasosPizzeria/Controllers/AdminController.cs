@@ -86,9 +86,9 @@ namespace TomasosPizzeria.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> UserDetails(string User)
+        public async Task<IActionResult> UserDetails(string Id)
         {
-            var user = await userManager.FindByIdAsync(User);
+            var user = await userManager.FindByIdAsync(Id);
 
             return ViewComponent("UserDetails", user);
         }
