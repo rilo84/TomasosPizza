@@ -8,7 +8,22 @@
     <link rel="stylesheet" href="~/css/CustomerPage.css" />
 }
 
-<h1>Välkommen @Model.Name</h1>
-<button type="button" class="btn btn-danger">Beställ mat</button>
-<button type="button" class="btn btn-danger">Ändra kontaktuppgifter</button>
-<p>@ViewBag.Message</p>
+<div class="container d-flex flex-column align-items-center">
+    <div class="row">
+        <div class="col mt-5">
+            <h1>Välkommen @Model.Name</h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col mt-3">
+            <a href="#" class="btn btn-danger customerHomeBtn" role="button" aria-pressed="true">Beställ mat</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col mt-3">
+            <a href="#" class="btn btn-danger customerHomeBtn" role="button" aria-pressed="true">Ändra uppgifter</a>
+        </div>
+    </div>
+</div>
