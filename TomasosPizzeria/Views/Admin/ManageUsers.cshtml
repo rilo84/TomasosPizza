@@ -22,49 +22,56 @@
             {
                 <h4>@role.Name</h4>
 
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th scope="col">Namn</th>
-                            <th scope="col">Editera</th>
-                            <th scope="col">Ta bort</th>
-                            <th scope="col">Ändra medlemskap</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <div class="form-group">
-                                    <select class="form-control" id="userSelect">
-                                        @foreach (var user in Model.Users)
-                                        {
-                                            if (await userManager.IsInRoleAsync(user, role.Name))
-                                            {
-                                                <option>@user.Name</option>
-                                            }
-                                        }
-                                    </select>
-                                </div>
+                <form asp-controller="Admin" asp-action="UpdateUserRole" method="post">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">Namn</th>
+                                <th scope="col">Editera</th>
+                                <th scope="col">Ta bort</th>
+                                <th scope="col">Ändra medlemskap</th>
+                            </tr>
+                        </thead>
+                        <tbody>
 
-                            </td>
-                            <td><button class="btn btn-danger userManagementBtn">Editera</button></td>
-                            <td><button class="btn btn-danger userManagementBtn">Ta bort</button></td>
-                            <td>
-                                <div class="form-group">
-                                    <select class="form-control" id="userSelect">
-                                        @foreach (var roles in Model.Roles)
-	                                    {
-                                            <option>@roles.Name</option>
-	                                    }
-                                    </select>
-                                </div>
-                            </td>
-                            <td><button class="btn btn-danger userManagementBtn">Ändra</button></td>
-                        </tr>
-                    </tbody>
-                </table>
-        }
-                    
-            </div>
+                            <tr>
+
+                                <td>
+                                    <div class="form-group">
+                                        <select class="form-control" id="userSelect" asp-for="User">
+                                            @foreach (var user in Model.Users)
+                                            {
+                                                if (await userManager.IsInRoleAsync(user, role.Name))
+                                                {
+                                                    <option value="@user.Id">@user.Name</option>
+                                                }
+                                            }
+                                        </select>
+                                        <span asp-validation-for="User"></span>
+                                    </div>
+
+                                </td>
+                                <td><button class="btn btn-danger userManagementBtn">Editera</button></td>
+                                <td><button class="btn btn-danger userManagementBtn">Ta bort</button></td>
+                                <td>
+                                    <div class="form-group">
+                                        <select class="form-control" id="roleSelect" asp-for="Role">
+                                            <option></option>
+                                            @foreach (var roles in Model.Roles)
+                                            {
+                                                <option>@roles.Name</option>
+                                            }
+                                        </select>
+                                        <span asp-validation-for="Role"></span>
+                                    </div>
+                                </td>
+                                <td><button type="submit" class="btn btn-danger userManagementBtn">Ändra</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+            }
+
+        </div>
     </div>
 </div>

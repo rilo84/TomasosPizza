@@ -64,5 +64,25 @@ namespace TomasosPizzeria.Controllers
             return View();
         }
 
+        [HttpPost]
+        public async Task<IActionResult> UpdateUserRole(UserViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await userManager.FindByIdAsync(model.User);
+
+                var currentRoles = await userManager.GetRolesAsync(user);
+                var role = currentRoles.FirstOrDefault();
+                var removeResult = await userManager.RemoveFromRoleAsync(user,role);
+                var addResult = await userManager.AddToRoleAsync(user, model.Role);
+
+                if (removeResult.Succeeded && addResult.Succeeded)
+                {
+                    return RedirectToAction("Manageusers");
+                }
+            }
+
+            return View();
+        }
     }
 }
