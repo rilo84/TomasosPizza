@@ -43,6 +43,8 @@ namespace TomasosPizzeria.Controllers
             foodItem.OrderAmount = model.OrderAmount;
             foodItem.Price = food.Pris;
 
+            foodItem.FoodTotal += foodItem.Price * foodItem.OrderAmount;
+
             var cartJson = HttpContext.Session.GetString("cartData");
 
             if (cartJson == null)
@@ -60,6 +62,7 @@ namespace TomasosPizzeria.Controllers
             if (existingFood != null)
             {
                 existingFood.OrderAmount += foodItem.OrderAmount;
+                existingFood.FoodTotal += foodItem.FoodTotal;
             }
             else
             {

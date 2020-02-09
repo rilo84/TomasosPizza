@@ -13,6 +13,7 @@ namespace TomasosPizzeria.ViewModels
         public string Ingredients { get; set; }
         public decimal Price { get; set; }
         public int OrderAmount { get; set; } = 0;
+        public decimal FoodTotal { get; set; }
 
     }
 

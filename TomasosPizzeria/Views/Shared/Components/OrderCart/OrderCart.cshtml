@@ -1,8 +1,30 @@
 ﻿@model CartViewModel
 
-@foreach (var food in Model.Food)
-{
-    <h3>@food.OrderAmount</h3>
-    <h3>@food.Name</h3>
-    <p>@Model.TotalAmount</p>
-}
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">Antal</th>
+            <th scope="col">Maträtt</th>
+            <th scope="col">Total</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var food in Model.Food)
+        {
+        <tr>
+            <td>@food.OrderAmount</td>
+            <td>@food.Name</td>
+            <td>@food.FoodTotal</td>
+            <td><input type="submit" class="btn btn-danger" value="-" /></td>
+        </tr>
+         }    
+    </tbody>
+</table>
+
+
+
+
+<p>@Model.TotalAmount</p>
+<input type="submit" class="btn btn-danger" value="Skicka beställning" />
