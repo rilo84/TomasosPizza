@@ -15,6 +15,11 @@ namespace TomasosPizzeria.Repositories
             _context = context;
         }
 
+        public Matratt GetFoodById(int Id)
+        {
+            return _context.Matratt.FirstOrDefault(food => food.MatrattId == Id);
+        }
+
         public Menu GetMenu()
         {
             var menu = new Menu();
@@ -51,6 +56,8 @@ namespace TomasosPizzeria.Repositories
                     if (category.CategoryId == food.MatrattTyp)
                     {
                         var foodItem = new Food();
+
+                        foodItem.Price = food.Pris;
 
                         foodItem.FoodId = food.MatrattId;
 

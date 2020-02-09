@@ -8,30 +8,49 @@
     <link rel="stylesheet" href="~/css/Order.css" />
 }
 
-<div id="mainContent" class="col-sm col-lg-10">
+<div id="mainContent" class="col-sm col-lg-9">
     <h1>Beställning</h1>
     @foreach (var category in Model.Menu.FoodCategory)
     {
-        <h2>@category.CategoryName</h2>
-        @foreach (var food in category.FoodItems)
-        {
-            <div class="foodWrapper">
-                <div id="foodDescription">
-                    <h5>@food.Name</h5>
-                    <p>Innehåll: @food.Ingredients</p>
-                </div>
-                <div id="foodAmount">
-                    <p>amount</p>
-                </div>
-                <div id="foodBuy">
-                    <p>buy</p>
-                </div>
-            </div>
-        }
+        <table class="table">
+            <thead class="bg-danger">
+                <tr>
+                    <th scope="col" class="nameCol">@category.CategoryName</th>
+                    <th scope="col" class="ingredientCol">Ingredienser</th>
+                    <th scope="col" class="priceCol">Pris</th>
+                    <th scope="col" class="amountCol">Antal</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var food in category.FoodItems)
+                {
+                    <tr>
+                        <th scope="row" class="nameCol">@food.Name</th>
+                        <td class="ingredientCol">@food.Ingredients</td>
+                        <td class="priceCol">@food.Price kr</td>
+                        <td class="amountCol">
+                            <form asp-controller="Order"
+                                  asp-action="AddToCart"
+                                  asp-route-id="@food.FoodId"
+                                  data-ajax="true"
+                                  data-ajax-method="GET"
+                                  data-ajax-mode="replace"
+                                  data-ajax-update="#sideBar">
+                                <div class="form-group form-inline">
+                                    <select class="form-control amountSelect" id="@food.Name-select" asp-for="OrderAmount" asp-items="@Model.OrderAmounts">
+                                    </select>
+                                    <input class="btn btn-danger userManagementBtn" aria-pressed="true" type="submit" value="Lägg till" />
+                                </div>
+                            </form>
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
     }
 </div>
-<div id="sideBar" class="col-sm col-lg-2">
-    <h4>Din beställning:</h4>
-    <partial name="_CurrentOrder">
-</div>            
+<div id="sideBar" class="col-sm col-lg-3">
+
+</div>
 

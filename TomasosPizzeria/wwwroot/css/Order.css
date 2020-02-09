@@ -12,31 +12,26 @@
     padding-top: 20px;
 }
 
-.foodWrapper {
-    display:grid;
-    grid-template-columns:2fr,1fr,1fr;
-    grid-template-rows:1fr;
-    justify-content:space-between;
-    width: 600px;
-    height: 80px;
-    background-color: #B60609;
-    margin:10px;
-    border-radius:5px;
-    color:white;
-    padding:10px;
+.nameCol{
+    width:20%;
 }
 
-.foodDescription{
-   display:grid;
-   grid-column:1/3;
+.ingredientCol {
+    width: 30%;
 }
 
-.foodAmount {
-    display: grid;
-    grid-column: 2/3;
+.priceCol{
+    width: 10%;
 }
 
-.foodBuy {
-    display: grid;
-    grid-column: 3/3;
+.amountSelect{
+    width:60%;
+}
+
+.amountCol{
+    width:20%;
+}
+
+.userManagementBtn{
+    margin-left:10px;
 }

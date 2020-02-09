@@ -1,0 +1,8 @@
+﻿@model CartViewModel
+
+@foreach (var food in Model.Food)
+{
+    <h3>@food.OrderAmount</h3>
+    <h3>@food.Name</h3>
+    <p>@Model.TotalAmount</p>
+}
