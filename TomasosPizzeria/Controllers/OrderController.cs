@@ -20,7 +20,7 @@ namespace TomasosPizzeria.Controllers
         private readonly ISelectService selectService;
         private readonly ICartService cartService;
         private readonly IUserRepository userRepository;
-        private readonly TomasosContext context;
+        private readonly IOrderService orderService;
 
         public OrderController(
             IFoodRepository foodRepository, 
@@ -28,14 +28,14 @@ namespace TomasosPizzeria.Controllers
             ISelectService selectService, 
             ICartService cartService,
             IUserRepository userRepository,
-            TomasosContext context)
+            IOrderService orderService)
         {
             _foodRepository = foodRepository;
             this.sessionService = sessionService;
             this.selectService = selectService;
             this.cartService = cartService;
             this.userRepository = userRepository;
-            this.context = context;
+            this.orderService = orderService;
         }
 
         [HttpGet]
@@ -73,21 +73,7 @@ namespace TomasosPizzeria.Controllers
         [HttpPost]
         public IActionResult OrderConfirmation()
         {
-            var user = sessionService.GetUser();
-            var cart = sessionService.GetCart();
-
-            var order = new Bestallning
-            {
-                BestallningDatum = DateTime.Now,
-                Totalbelopp = 1000,
-                Levererad = false,
-                KundId = user.Id
-            };
-
-
-            context.Bestallning.Add(order);
-            context.SaveChanges();
-
+            orderService.CreateOrder();
             return View();
         }
     }

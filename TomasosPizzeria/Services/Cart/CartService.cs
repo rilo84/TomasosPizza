@@ -72,6 +72,7 @@ namespace TomasosPizzeria.Services
             var foodContext = foodRepository.GetFoodById(id);
             
             var foodItem = new Food();
+            foodItem.FoodId = id;
             foodItem.Name = foodContext.MatrattNamn;
             foodItem.OrderAmount = model.OrderAmount;
             foodItem.Price = foodContext.Pris;
