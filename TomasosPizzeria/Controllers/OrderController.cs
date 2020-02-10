@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
+using TomasosPizzeria.Models;
 using TomasosPizzeria.Repositories;
 using TomasosPizzeria.Services;
 using TomasosPizzeria.ViewModels;
@@ -19,19 +20,22 @@ namespace TomasosPizzeria.Controllers
         private readonly ISelectService selectService;
         private readonly ICartService cartService;
         private readonly IUserRepository userRepository;
+        private readonly TomasosContext context;
 
         public OrderController(
             IFoodRepository foodRepository, 
             ISessionService sessionService,
             ISelectService selectService, 
             ICartService cartService,
-            IUserRepository userRepository)
+            IUserRepository userRepository,
+            TomasosContext context)
         {
             _foodRepository = foodRepository;
             this.sessionService = sessionService;
             this.selectService = selectService;
             this.cartService = cartService;
             this.userRepository = userRepository;
+            this.context = context;
         }
 
         [HttpGet]
@@ -64,6 +68,27 @@ namespace TomasosPizzeria.Controllers
             }
             
             return ViewComponent("OrderCart", model.Cart);
+        }
+
+        [HttpPost]
+        public IActionResult OrderConfirmation()
+        {
+            var user = sessionService.GetUser();
+            var cart = sessionService.GetCart();
+
+            var order = new Bestallning
+            {
+                BestallningDatum = DateTime.Now,
+                Totalbelopp = 1000,
+                Levererad = false,
+                KundId = user.Id
+            };
+
+
+            context.Bestallning.Add(order);
+            context.SaveChanges();
+
+            return View();
         }
     }
 }

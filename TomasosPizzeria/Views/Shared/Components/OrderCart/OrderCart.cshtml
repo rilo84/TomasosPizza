@@ -35,6 +35,8 @@ else
     <p>Din rabatt: -@Model.Discount</p>
     <p>Summa inkl rabatt: @(Model.TotalAmount-Model.Discount)</p>
     <p>Bonus för detta köp: @Model.TotalBonus</p>
-
-    <input type="submit" class="btn btn-danger" value="Skicka beställning" />
+    <form asp-action="OrderConfirmation" method="post">
+        <input type="submit" class="btn btn-danger" value="Skicka beställning" />
+    </form>
+   
 }

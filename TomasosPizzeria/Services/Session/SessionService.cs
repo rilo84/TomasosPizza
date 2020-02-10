@@ -51,5 +51,11 @@ namespace TomasosPizzeria.Services
             var cartJson = JsonConvert.SerializeObject(cart);
             _session.SetString("cartData", cartJson);
         }
+
+        public CartViewModel GetCart()
+        {
+            var cartJson = _session.GetString("cartData");
+            return JsonConvert.DeserializeObject<CartViewModel>(cartJson);
+        }
     }
 }
