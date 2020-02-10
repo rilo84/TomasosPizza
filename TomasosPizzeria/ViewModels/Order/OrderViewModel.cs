@@ -10,9 +10,13 @@ namespace TomasosPizzeria.ViewModels
     {
         public Menu Menu { get; set; }
         public int OrderAmount { get; set; }
-
         public string FoodId { get; set; }
         public List<SelectListItem> OrderAmounts { get; set; }
+        public CartViewModel Cart { get; set; }
 
+        public OrderViewModel()
+        {
+            Cart = new CartViewModel();
+        }
     }
 }

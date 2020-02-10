@@ -80,6 +80,15 @@ namespace TomasosPizzeria.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> Logout()
+        {
+            HttpContext.Session.Clear();
+            await userRepository.SignOutUser();
+
+            return RedirectToAction("Index","Home");
+        }
+
+        [HttpGet]
         public IActionResult CustomerHome()
         {
             var customerJson = HttpContext.Session.GetString("customerData");

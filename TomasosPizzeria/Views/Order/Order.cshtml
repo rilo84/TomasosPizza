@@ -33,7 +33,7 @@
                                   asp-action="AddToCart"
                                   asp-route-id="@food.FoodId"
                                   data-ajax="true"
-                                  data-ajax-method="GET"
+                                  data-ajax-method="POST"
                                   data-ajax-mode="replace"
                                   data-ajax-update="#sideBar">
                                 <div class="form-group form-inline">
@@ -45,12 +45,11 @@
                         </td>
                     </tr>
                 }
-
             </tbody>
         </table>
     }
 </div>
 <div id="sideBar" class="col-sm col-lg-3">
-
+    @await Component.InvokeAsync("OrderCart", Model.Cart);
 </div>
 

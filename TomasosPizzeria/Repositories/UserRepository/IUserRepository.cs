@@ -17,5 +17,6 @@ namespace TomasosPizzeria.Repositories
         Task<ApplicationUser> GetUser(LoginViewModel model);
         Task<SignInResult> SignInUser(RegisterViewModel model);
         Task<SignInResult> SignInUser(LoginViewModel model);
+        Task SignOutUser();
     }
 }

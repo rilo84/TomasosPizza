@@ -18,6 +18,8 @@ namespace TomasosPizzeria.Controllers
         {
             _foodRepository = foodRepository;
         }
+
+        [HttpGet]
         public IActionResult Order()
         {
             var model = new OrderViewModel();
@@ -29,14 +31,19 @@ namespace TomasosPizzeria.Controllers
                 model.OrderAmounts.Add(new SelectListItem { Text = $"{i + 1}", Value = $"{i + 1}" });
             }
 
+            var cartJson = HttpContext.Session.GetString("cartData");
+
+            if (cartJson != null)
+            {
+                model.Cart = JsonConvert.DeserializeObject<CartViewModel>(cartJson);
+            }
+
             return View(model);
         }
 
-        [HttpGet]
+        [HttpPost]
         public IActionResult AddToCart(int Id, OrderViewModel model)
         {
-            CartViewModel cart;
-
             var food = _foodRepository.GetFoodById(Id);
             var foodItem = new Food();
             foodItem.Name = food.MatrattNamn;
@@ -47,17 +54,12 @@ namespace TomasosPizzeria.Controllers
 
             var cartJson = HttpContext.Session.GetString("cartData");
 
-            if (cartJson == null)
+            if (cartJson != null)
             {
-                cart = new CartViewModel();
+                model.Cart = JsonConvert.DeserializeObject<CartViewModel>(cartJson);
             }
-
-            else 
-            {
-                cart = JsonConvert.DeserializeObject<CartViewModel>(cartJson);
-            }
-
-            var existingFood = cart.Food.FirstOrDefault(f => f.Name == foodItem.Name);
+           
+            var existingFood = model.Cart.Food.FirstOrDefault(f => f.Name == foodItem.Name);
 
             if (existingFood != null)
             {
@@ -66,15 +68,15 @@ namespace TomasosPizzeria.Controllers
             }
             else
             {
-                cart.Food.Add(foodItem);
+                model.Cart.Food.Add(foodItem);
             }
-            
-            cart.TotalAmount += foodItem.Price * foodItem.OrderAmount;
 
-            cartJson = JsonConvert.SerializeObject(cart);
+            model.Cart.TotalAmount += foodItem.Price * foodItem.OrderAmount;
+
+            cartJson = JsonConvert.SerializeObject(model.Cart);
             HttpContext.Session.SetString("cartData",cartJson);
 
-            return ViewComponent("OrderCart", cart);
+            return ViewComponent("OrderCart", model.Cart);
         }
     }
 }
