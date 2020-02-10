@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
 using TomasosPizzeria.Repositories;
+using TomasosPizzeria.Services;
 using TomasosPizzeria.ViewModels;
 
 namespace TomasosPizzeria.Controllers
@@ -14,29 +15,30 @@ namespace TomasosPizzeria.Controllers
     public class OrderController : Controller
     {
         private IFoodRepository _foodRepository;
-        public OrderController(IFoodRepository foodRepository)
+        private readonly ISessionService sessionService;
+        private readonly ISelectService selectService;
+        private readonly ICartService cartService;
+
+        public OrderController(
+            IFoodRepository foodRepository, 
+            ISessionService sessionService,
+            ISelectService selectService, 
+            ICartService cartService)
         {
             _foodRepository = foodRepository;
+            this.sessionService = sessionService;
+            this.selectService = selectService;
+            this.cartService = cartService;
         }
 
         [HttpGet]
         public IActionResult Order()
         {
             var model = new OrderViewModel();
+
             model.Menu = _foodRepository.GetMenu();
-            model.OrderAmounts = new List<SelectListItem>();
-
-            for (int i = 0; i < 10; i++)
-            {
-                model.OrderAmounts.Add(new SelectListItem { Text = $"{i + 1}", Value = $"{i + 1}" });
-            }
-
-            var cartJson = HttpContext.Session.GetString("cartData");
-
-            if (cartJson != null)
-            {
-                model.Cart = JsonConvert.DeserializeObject<CartViewModel>(cartJson);
-            }
+            model.OrderAmounts = selectService.GetListNumbers(1, 10);
+            model.Cart = sessionService.TryGetCart(model.Cart);
 
             return View(model);
         }
@@ -44,37 +46,10 @@ namespace TomasosPizzeria.Controllers
         [HttpPost]
         public IActionResult AddToCart(int Id, OrderViewModel model)
         {
-            var food = _foodRepository.GetFoodById(Id);
-            var foodItem = new Food();
-            foodItem.Name = food.MatrattNamn;
-            foodItem.OrderAmount = model.OrderAmount;
-            foodItem.Price = food.Pris;
-
-            foodItem.FoodTotal += foodItem.Price * foodItem.OrderAmount;
-
-            var cartJson = HttpContext.Session.GetString("cartData");
-
-            if (cartJson != null)
-            {
-                model.Cart = JsonConvert.DeserializeObject<CartViewModel>(cartJson);
-            }
-           
-            var existingFood = model.Cart.Food.FirstOrDefault(f => f.Name == foodItem.Name);
-
-            if (existingFood != null)
-            {
-                existingFood.OrderAmount += foodItem.OrderAmount;
-                existingFood.FoodTotal += foodItem.FoodTotal;
-            }
-            else
-            {
-                model.Cart.Food.Add(foodItem);
-            }
-
-            model.Cart.TotalAmount += foodItem.Price * foodItem.OrderAmount;
-
-            cartJson = JsonConvert.SerializeObject(model.Cart);
-            HttpContext.Session.SetString("cartData",cartJson);
+            model.Cart = sessionService.TryGetCart(model.Cart);
+            var foodItem = cartService.MakeFoodItem(Id, model);
+            cartService.AddFood(foodItem, model);
+            sessionService.SetCart(model.Cart);
 
             return ViewComponent("OrderCart", model.Cart);
         }

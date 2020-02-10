@@ -27,7 +27,6 @@ namespace TomasosPizzeria.Controllers
         [HttpGet]
         public IActionResult Register()
         {
-
             return View();
         }
 

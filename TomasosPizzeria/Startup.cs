@@ -42,6 +42,8 @@ namespace TomasosPizzeria
             services.AddTransient<IFoodRepository, FoodRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<ISessionService, SessionService>();
+            services.AddTransient<ISelectService, SelectService>();
+            services.AddTransient<ICartService, CartService>();
 
             var conn = _configuration.GetConnectionString("Default");
             services.AddDbContext<TomasosContext>(options => options.UseSqlServer(conn));
