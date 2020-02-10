@@ -13,6 +13,7 @@ namespace TomasosPizzeria.Repositories
         ApplicationUser CreateUser(RegisterViewModel model);
         Task<IdentityResult> RegisterUser(ApplicationUser user, RegisterViewModel model);
         Task<IdentityResult> SetUserRole(ApplicationUser user, string roleName);
+        Task<bool> IsAdmin(ApplicationUser user);
         Task<ApplicationUser> GetUser(RegisterViewModel model);
         Task<ApplicationUser> GetUser(LoginViewModel model);
         Task<SignInResult> SignInUser(RegisterViewModel model);

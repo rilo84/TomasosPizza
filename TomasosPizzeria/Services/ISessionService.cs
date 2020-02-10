@@ -1,0 +1,15 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using TomasosPizzeria.Data;
+
+namespace TomasosPizzeria.Services
+{
+    public interface ISessionService
+    {
+        ApplicationUser GetUser();
+        void SetUser(ApplicationUser user);
+        void ClearSessionData();
+    }
+}

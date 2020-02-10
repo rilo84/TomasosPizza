@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using TomasosPizzeria.Data;
 using TomasosPizzeria.Repositories;
+using TomasosPizzeria.Services;
 using TomasosPizzeria.ViewModels;
 
 namespace TomasosPizzeria.Controllers
@@ -15,10 +16,12 @@ namespace TomasosPizzeria.Controllers
     public class AccountController : Controller
     {
         private readonly IUserRepository userRepository;
+        private readonly ISessionService sessionService;
 
-        public AccountController(IUserRepository userRepository)
+        public AccountController(IUserRepository userRepository, ISessionService sessionService)
         {
             this.userRepository = userRepository;
+            this.sessionService = sessionService;
         }
 
         [HttpGet]
@@ -41,13 +44,13 @@ namespace TomasosPizzeria.Controllers
                 if (userCreationResult.Succeeded)
                 {
                     var roleAssignmentResult = await userRepository.SetUserRole(user, "RegularUser");
+
                     if (roleAssignmentResult.Succeeded)
                     {
                         await userRepository.SignInUser(model);
                         var customer = await userRepository.GetUser(model);
 
-                        var customerJson = JsonConvert.SerializeObject(customer);
-                        HttpContext.Session.SetString("customerData", customerJson);
+                        sessionService.SetUser(customer);
 
                         return RedirectToAction("CustomerHome");
                     }
@@ -67,11 +70,16 @@ namespace TomasosPizzeria.Controllers
         public async Task<IActionResult> Login(LoginViewModel model)
         {
             var result = await userRepository.SignInUser(model);
+
             if (result.Succeeded)
             {
                 var customer = await userRepository.GetUser(model);
-                var customerJson = JsonConvert.SerializeObject(customer);
-                HttpContext.Session.SetString("customerData", customerJson);
+                sessionService.SetUser(customer);
+
+                if (await userRepository.IsAdmin(customer))
+                {
+                    return RedirectToAction("Index","Admin");
+                }
 
                 return RedirectToAction("CustomerHome");
             }
@@ -82,7 +90,7 @@ namespace TomasosPizzeria.Controllers
         [HttpGet]
         public async Task<IActionResult> Logout()
         {
-            HttpContext.Session.Clear();
+            sessionService.ClearSessionData();
             await userRepository.SignOutUser();
 
             return RedirectToAction("Index","Home");
@@ -91,9 +99,7 @@ namespace TomasosPizzeria.Controllers
         [HttpGet]
         public IActionResult CustomerHome()
         {
-            var customerJson = HttpContext.Session.GetString("customerData");
-            var model = JsonConvert.DeserializeObject<ApplicationUser>(customerJson);
-
+            var model = sessionService.GetUser();
             return View(model);
         }
     }

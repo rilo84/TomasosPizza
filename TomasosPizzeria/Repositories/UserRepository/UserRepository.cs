@@ -67,5 +67,10 @@ namespace TomasosPizzeria.Repositories
         {
             return signInManager.SignOutAsync();
         }
+
+        public Task<bool> IsAdmin(ApplicationUser user)
+        {
+            return userManager.IsInRoleAsync(user, "Admin");
+        }
     }
 }

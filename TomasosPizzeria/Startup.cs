@@ -13,6 +13,7 @@ using TomasosPizzeria.Models;
 using TomasosPizzeria.Repositories;
 using TomasosPizzeria.Data;
 using Microsoft.AspNetCore.Identity;
+using TomasosPizzeria.Services;
 
 namespace TomasosPizzeria
 {
@@ -40,6 +41,7 @@ namespace TomasosPizzeria
             services.AddTransient<ICustomerRepository, CustomerRepository>();
             services.AddTransient<IFoodRepository, FoodRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<ISessionService, SessionService>();
 
             var conn = _configuration.GetConnectionString("Default");
             services.AddDbContext<TomasosContext>(options => options.UseSqlServer(conn));
