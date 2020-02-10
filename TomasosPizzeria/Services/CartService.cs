@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TomasosPizzeria.Data;
 using TomasosPizzeria.Repositories;
 using TomasosPizzeria.ViewModels;
 
@@ -10,10 +11,22 @@ namespace TomasosPizzeria.Services
     public class CartService : ICartService
     {
         private readonly IFoodRepository foodRepository;
+        private readonly ISessionService sessionService;
+        private readonly IUserRepository userRepository;
 
-        public CartService(IFoodRepository foodRepository)
+        public CartService(IFoodRepository foodRepository, ISessionService sessionService, IUserRepository userRepository)
         {
             this.foodRepository = foodRepository;
+            this.sessionService = sessionService;
+            this.userRepository = userRepository;
+        }
+
+        public void AddBonus(CartViewModel model)
+        {
+            int bonus = 0;
+            model.Food.ForEach(f => bonus += f.OrderAmount * 10);
+
+            model.TotalBonus = bonus;
         }
 
         public void AddFood(Food foodItem, OrderViewModel model)
@@ -31,6 +44,27 @@ namespace TomasosPizzeria.Services
             }
 
             model.Cart.TotalAmount += foodItem.Price * foodItem.OrderAmount;
+        }
+
+        public void CheckBonus(CartViewModel model)
+        {
+            if (model.CurrentBonus >= 100)
+            {
+                var food = model.Food.OrderBy(f => f.Price).FirstOrDefault();
+                model.BonusMoney = food.Price;
+                model.TotalAmount -= food.Price;
+            }
+        }
+
+        public void CheckDiscount(CartViewModel model)
+        {
+            int amountFood = 0;
+            model.Food.ForEach(f => amountFood = f.OrderAmount);
+
+            if (amountFood > 3)
+            {
+                model.Discount = model.TotalAmount * 0.2m;
+            }
         }
 
         public Food MakeFoodItem(int id, OrderViewModel model)

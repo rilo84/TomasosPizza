@@ -31,9 +31,10 @@ else
         </tbody>
     </table>
 
+    <p>Summa: @Model.TotalAmount kr</p>
+    <p>Din rabatt: -@Model.Discount</p>
+    <p>Summa inkl rabatt: @(Model.TotalAmount-Model.Discount)</p>
+    <p>Bonus för detta köp: @Model.TotalBonus</p>
 
-
-
-    <p>@Model.TotalAmount</p>
     <input type="submit" class="btn btn-danger" value="Skicka beställning" />
 }

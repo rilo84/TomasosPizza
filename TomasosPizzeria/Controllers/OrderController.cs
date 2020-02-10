@@ -18,17 +18,20 @@ namespace TomasosPizzeria.Controllers
         private readonly ISessionService sessionService;
         private readonly ISelectService selectService;
         private readonly ICartService cartService;
+        private readonly IUserRepository userRepository;
 
         public OrderController(
             IFoodRepository foodRepository, 
             ISessionService sessionService,
             ISelectService selectService, 
-            ICartService cartService)
+            ICartService cartService,
+            IUserRepository userRepository)
         {
             _foodRepository = foodRepository;
             this.sessionService = sessionService;
             this.selectService = selectService;
             this.cartService = cartService;
+            this.userRepository = userRepository;
         }
 
         [HttpGet]
@@ -44,13 +47,22 @@ namespace TomasosPizzeria.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddToCart(int Id, OrderViewModel model)
+        public async Task<IActionResult> AddToCart(int Id, OrderViewModel model)
         {
             model.Cart = sessionService.TryGetCart(model.Cart);
             var foodItem = cartService.MakeFoodItem(Id, model);
             cartService.AddFood(foodItem, model);
             sessionService.SetCart(model.Cart);
 
+            var customer = sessionService.GetUser();
+            if (await userRepository.IsPremium(customer))
+            {
+                model.Cart.IsPremium = true;
+                cartService.CheckDiscount(model.Cart);
+                cartService.CheckBonus(model.Cart);
+                cartService.AddBonus(model.Cart);
+            }
+            
             return ViewComponent("OrderCart", model.Cart);
         }
     }

@@ -10,6 +10,10 @@ namespace TomasosPizzeria.ViewModels
         public List<Food> Food { get; set; }
         public decimal TotalAmount { get; set; }
         public int TotalBonus { get; set; }
+        public int CurrentBonus { get; set; }
+        public decimal Discount { get; set; }
+        public decimal BonusMoney { get; set; }
+        public bool IsPremium { get; set; }
 
         public CartViewModel()
         {
