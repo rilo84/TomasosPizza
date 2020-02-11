@@ -26,7 +26,8 @@ namespace TomasosPizzeria.Services
             AddOrder(cart,user);
             AddFood(cart, user);
 
-            sessionService.ClearSessionData();
+            cart = new CartViewModel();
+            sessionService.SetCart(cart);
         }
         private void AddOrder(CartViewModel cart, ApplicationUser user)
         {

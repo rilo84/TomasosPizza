@@ -1,6 +1,6 @@
 ﻿@model CartViewModel
 
-<h4>Varukorg</h4>
+<h4 id="cartHeader">Varukorg</h4>
 @if (Model.Food.Count == 0)
 {
     <p>Din varukorg är tom</p>
@@ -9,7 +9,7 @@
 else
 {
     <table class="table">
-        <thead class="thead-dark">
+        <thead class="thead">
             <tr>
                 <th scope="col">Antal</th>
                 <th scope="col">Maträtt</th>
@@ -34,18 +34,27 @@ else
                            data-ajax-mode="replace"
                            data-ajax-update="#sideBar"
                            class="btn btn-danger userManagementBtn"
-                           role="button" aria-pressed="true">-</a></td>
+                           role="button" aria-pressed="true">-</a>
+                    </td>
                 </tr>
             }
         </tbody>
     </table>
 
-    <p>Summa: @Model.TotalAmount kr</p>
-    <p>Din rabatt: -@Model.Discount</p>
-    <p>Summa inkl rabatt: @(Model.TotalAmount-Model.Discount)</p>
-    <p>Bonus för detta köp: @Model.TotalBonus</p>
+    <div id="paymentDetails">
+        <p>Summa: @Model.TotalAmount kr</p>
+        @if (User.IsInRole("PremiumUser"))
+        {
+            @if (Model.TotalBonus > 30)
+            {
+                <p>Din rabatt: -@Model.Discount</p>
+                <p>Summa inkl rabatt: @(Model.TotalAmount - Model.Discount)</p>
+            }
+            <p>Bonus för detta köp: @Model.TotalBonus</p>
+        }
+    </div>
     <form asp-action="OrderConfirmation" method="post">
         <input type="submit" class="btn btn-danger" value="Skicka beställning" />
     </form>
-   
+
 }

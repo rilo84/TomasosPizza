@@ -10,6 +10,7 @@
     flex-direction: column;
     align-items: center;
     padding-top: 20px;
+    border-left: 1px solid black;
 }
 
 .nameCol{
@@ -34,4 +35,20 @@
 
 .userManagementBtn{
     margin-left:10px;
+}
+
+#cartHeader {
+    margin-top: 5%;
+}
+
+.thead {
+    background-color: #B60609;
+    color: white;
+}
+
+#paymentDetails{
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    width:90%;
 }
