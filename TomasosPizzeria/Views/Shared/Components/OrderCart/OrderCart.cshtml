@@ -25,7 +25,16 @@ else
                     <td>@food.OrderAmount</td>
                     <td>@food.Name</td>
                     <td>@food.FoodTotal</td>
-                    <td><input type="submit" class="btn btn-danger" value="-" /></td>
+                    <td>
+                        <a asp-controller="Order"
+                           asp-action="RemoveFromCart"
+                           asp-route-id="@food.FoodId"
+                           data-ajax="true"
+                           data-ajax-method="POST"
+                           data-ajax-mode="replace"
+                           data-ajax-update="#sideBar"
+                           class="btn btn-danger userManagementBtn"
+                           role="button" aria-pressed="true">-</a></td>
                 </tr>
             }
         </tbody>

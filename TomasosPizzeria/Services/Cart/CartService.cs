@@ -59,7 +59,7 @@ namespace TomasosPizzeria.Services
         public void CheckDiscount(CartViewModel model)
         {
             int amountFood = 0;
-            model.Food.ForEach(f => amountFood = f.OrderAmount);
+            model.Food.ForEach(f => amountFood += f.OrderAmount);
 
             if (amountFood > 3)
             {
@@ -79,6 +79,26 @@ namespace TomasosPizzeria.Services
             foodItem.FoodTotal += foodItem.Price * foodItem.OrderAmount;
 
             return foodItem;
+        }
+
+        public void RemoveFood(int id, OrderViewModel model)
+        {
+            var food = model.Cart.Food.FirstOrDefault(f => f.FoodId == id);
+            var foodIndex = model.Cart.Food.IndexOf(food);
+
+            if (food.OrderAmount > 1)
+            {
+                food.OrderAmount -= 1;
+                food.FoodTotal -= food.Price;
+                model.Cart.TotalAmount -= food.Price;
+                model.Cart.Food[foodIndex] = food;
+            }
+            else
+            {
+                model.Cart.TotalAmount -= food.FoodTotal;
+                model.Cart.Food.Remove(food);
+            }
+                
         }
     }
 }

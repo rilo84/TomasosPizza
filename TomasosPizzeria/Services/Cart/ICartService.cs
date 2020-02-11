@@ -11,6 +11,8 @@ namespace TomasosPizzeria.Services
     {
         Food MakeFoodItem(int id, OrderViewModel model);
 
+        void RemoveFood(int id, OrderViewModel model);
+
         void AddFood(Food foodItem , OrderViewModel model);
 
         void CheckDiscount(CartViewModel model);

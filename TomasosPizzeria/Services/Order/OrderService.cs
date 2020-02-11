@@ -28,9 +28,6 @@ namespace TomasosPizzeria.Services
 
             sessionService.ClearSessionData();
         }
-
-        
-
         private void AddOrder(CartViewModel cart, ApplicationUser user)
         {
             var order = new Bestallning

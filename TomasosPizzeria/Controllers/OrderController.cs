@@ -71,6 +71,25 @@ namespace TomasosPizzeria.Controllers
         }
 
         [HttpPost]
+        public async Task<IActionResult> RemoveFromCart(int Id, OrderViewModel model)
+        {
+            model.Cart = sessionService.TryGetCart(model.Cart);
+            cartService.RemoveFood(Id, model);
+            sessionService.SetCart(model.Cart);
+
+            var customer = sessionService.GetUser();
+            if (await userRepository.IsPremium(customer))
+            {
+                model.Cart.IsPremium = true;
+                cartService.CheckDiscount(model.Cart);
+                cartService.CheckBonus(model.Cart);
+                cartService.AddBonus(model.Cart);
+            }
+
+            return ViewComponent("OrderCart", model.Cart);
+        }
+
+        [HttpPost]
         public IActionResult OrderConfirmation()
         {
             orderService.CreateOrder();
