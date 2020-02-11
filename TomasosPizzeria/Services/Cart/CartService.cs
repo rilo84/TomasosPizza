@@ -6,6 +6,7 @@ using TomasosPizzeria.Data;
 using TomasosPizzeria.Repositories;
 using TomasosPizzeria.ViewModels;
 
+
 namespace TomasosPizzeria.Services
 {
     public class CartService : ICartService
@@ -65,12 +66,10 @@ namespace TomasosPizzeria.Services
             {
                 model.Discount = model.TotalAmount * 0.2m;
             }
-        }
-
-        public void GetCurrentBonus(CartViewModel model)
-        {
-            var user = sessionService.GetUser();
-            model.CurrentBonus = user.BonusPoints;
+            else
+            {
+                model.Discount = 0;
+            }
         }
 
         public Food MakeFoodItem(int id, OrderViewModel model)
@@ -101,7 +100,7 @@ namespace TomasosPizzeria.Services
             }
             else
             {
-                model.Cart.TotalAmount -= food.FoodTotal;
+                model.Cart.TotalAmount -= food.Price;
                 model.Cart.Food.Remove(food);
             }
                 

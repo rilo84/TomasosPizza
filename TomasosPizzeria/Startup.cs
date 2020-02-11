@@ -41,6 +41,7 @@ namespace TomasosPizzeria
             services.AddTransient<ICustomerRepository, CustomerRepository>();
             services.AddTransient<IFoodRepository, FoodRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IOrderRepository, OrderRepository>();
             services.AddTransient<ISessionService, SessionService>();
             services.AddTransient<ISelectService, SelectService>();
             services.AddTransient<ICartService, CartService>();

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using TomasosPizzeria.Data;
 using TomasosPizzeria.ViewModels;
+using TomasosPizzeria.Repositories;
 
 namespace TomasosPizzeria.Controllers
 {
@@ -15,11 +16,13 @@ namespace TomasosPizzeria.Controllers
     {
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly IOrderRepository orderRepository;
 
-        public AdminController(RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager)
+        public AdminController(RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager, IOrderRepository orderRepository)
         {
             this.roleManager = roleManager;
             this.userManager = userManager;
+            this.orderRepository = orderRepository;
         }
 
         [HttpGet]
@@ -45,6 +48,17 @@ namespace TomasosPizzeria.Controllers
             
             model.Users = userManager.Users.ToList();
             model.Roles = roleManager.Roles.ToList();
+
+            return View(model);
+        }
+
+        [HttpGet]
+        public IActionResult ManageOrders()
+        {
+            var model = new AdminOrderViewModel();
+
+            model.Users = userManager.Users.ToList();
+            model.Orders = orderRepository.GetAllOrders();
 
             return View(model);
         }
@@ -93,6 +107,14 @@ namespace TomasosPizzeria.Controllers
             var user = await userManager.FindByIdAsync(Id);
 
             return ViewComponent("UserDetails", user);
+        }
+
+        [HttpGet]
+        public IActionResult OrderDetails(AdminOrderViewModel model)
+        {
+            model.Orders = model.Orders.Where(o => o.KundId == model.UserId).ToList();
+            
+            return ViewComponent("OrderDetails", model);
         }
     }
 }

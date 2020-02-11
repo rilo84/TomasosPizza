@@ -52,3 +52,12 @@
     align-items:flex-start;
     width:90%;
 }
+
+#confirmationContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+    align-items: center;
+    width: 100%;
+    padding:20px;
+}

@@ -3,14 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TomasosPizzeria.Models;
-using TomasosPizzeria.ViewModels;
 
 namespace TomasosPizzeria.Repositories
 {
-    public interface IFoodRepository
+    public interface IOrderRepository
     {
-        Menu GetMenu();
-
-        Matratt GetFoodById(int Id);
+        List<Bestallning> GetAllOrders();
     }
 }

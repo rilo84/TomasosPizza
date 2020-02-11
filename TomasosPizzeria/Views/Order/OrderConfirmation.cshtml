@@ -1,6 +1,17 @@
-﻿
+﻿@model CartViewModel
+
 @{
     ViewBag.Title = "Orderbekräftelse";
 }
 
-<img src="~/images/pizzaorder.svg" width="400px" />
+@section style{
+    <link rel="stylesheet" href="~/css/Order.css" />
+}
+
+<div id="confirmationContainer">
+    <h1> Tack för din beställing!</h1>
+    <img src="~/images/pizzaorder.svg" width="300px" />
+    <h4>Du har debiterats @Model.TotalAmount kr</h4>
+    <h3>Snart levereras en rykandde färsk pizza hem till dig</h3>
+</div>
+

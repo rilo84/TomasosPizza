@@ -44,13 +44,16 @@ namespace TomasosPizzeria.Controllers
         }
 
         [HttpGet]
-        public IActionResult Order()
+        public async Task<IActionResult> Order()
         {
             var model = new OrderViewModel();
 
             model.Menu = _foodRepository.GetMenu();
             model.OrderAmounts = selectService.GetListNumbers(1, 10);
             model.Cart = sessionService.TryGetCart(model.Cart);
+            var user = await userManager.GetUserAsync(User);
+            model.Cart.CurrentBonus = user.BonusPoints;
+            sessionService.SetCart(model.Cart);
 
             return View(model);
         }
@@ -64,14 +67,12 @@ namespace TomasosPizzeria.Controllers
             
 
             var customer = sessionService.GetUser();
-            if (await userRepository.IsPremium(customer))
+            if (await userRepository.IsPremium(customer) && model.Cart.Food.Count > 0)
             {
                 model.Cart.IsPremium = true;
-                cartService.GetCurrentBonus(model.Cart);
                 cartService.CheckDiscount(model.Cart);
                 cartService.CheckBonus(model.Cart);
                 cartService.AddBonus(model.Cart);
-                
             }
 
             sessionService.SetCart(model.Cart);
@@ -84,16 +85,17 @@ namespace TomasosPizzeria.Controllers
         {
             model.Cart = sessionService.TryGetCart(model.Cart);
             cartService.RemoveFood(Id, model);
-            sessionService.SetCart(model.Cart);
 
             var customer = sessionService.GetUser();
-            if (await userRepository.IsPremium(customer))
+            if (await userRepository.IsPremium(customer) && model.Cart.Food.Count > 0)
             {
                 model.Cart.IsPremium = true;
                 cartService.CheckDiscount(model.Cart);
                 cartService.CheckBonus(model.Cart);
                 cartService.AddBonus(model.Cart);
             }
+
+            sessionService.SetCart(model.Cart);
 
             return ViewComponent("OrderCart", model.Cart);
         }
@@ -103,7 +105,15 @@ namespace TomasosPizzeria.Controllers
         {
             var user = await userManager.GetUserAsync(User);
             var cart = sessionService.GetCart();
-            user.BonusPoints += cart.TotalBonus;
+
+            if(user.BonusPoints >= 100)
+            {
+                user.BonusPoints += cart.TotalBonus - 100;
+            }
+            else
+            {
+                user.BonusPoints += cart.TotalBonus;
+            }
 
             var result = await userManager.UpdateAsync(user);
 
@@ -112,7 +122,7 @@ namespace TomasosPizzeria.Controllers
                 orderService.CreateOrder();
             }
             
-            return View();
+            return View(cart);
         }
     }
 }

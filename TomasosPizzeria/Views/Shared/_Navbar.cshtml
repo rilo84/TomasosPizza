@@ -9,32 +9,39 @@
             <li class="nav-item">
                 <a class="nav-link" href="@Url.Action("Index", "Home")">Hem</a>
             </li>
-            @if (signInManager.IsSignedIn(User))
+            @if (signInManager.IsSignedIn(User) && (User.IsInRole("RegularUser") || User.IsInRole("PremiumUser")))
             {
                 <li class="nav-item">
                     <a class="nav-link" href="@Url.Action("Order", "Order")">Beställ</a>
                 </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="@Url.Action("CustomerHome", "Account")">Min Sida</a>
+                </li>
+
                 <li class="nav-item">
                     <a class="nav-link" href="@Url.Action("Logout", "Account")">Logga ut</a>
                 </li>
+            }
+            else if (signInManager.IsSignedIn(User) && (User.IsInRole("Admin")))
+            {
                 <li class="nav-item">
-                    <a class="nav-link" href="@Url.Action("Register", "Account")">Öppna Konto</a>
+                    <a class="nav-link" href="@Url.Action("Admin", "Index")">Admin</a>
                 </li>
+
                 <li class="nav-item">
-                    <a class="nav-link" href="@Url.Action("CustomerHome", "Account")">Min Sida</a>
+                    <a class="nav-link" href="@Url.Action("Logout", "Account")">Logga ut</a>
                 </li>
             }
             else
             {
 
                 <li class="nav-item">
-                    <a class="nav-link" href="@Url.Action("Order", "Order")">Beställ</a>
+                    <a class="nav-link" href="@Url.Action("Register", "Account")">Öppna Konto</a>
                 </li>
+
                 <li class="nav-item">
                     <a class="nav-link" href="@Url.Action("Login", "Account")">Logga In</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="@Url.Action("Register", "Account")">Öppna Konto</a>
                 </li>
             }
         </ul>
