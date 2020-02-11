@@ -12,7 +12,6 @@ namespace TomasosPizzeria.Services
         ApplicationUser GetUser();
         void SetUser(ApplicationUser user);
         CartViewModel TryGetCart(CartViewModel cart);
-
         CartViewModel GetCart();
         void SetCart(CartViewModel cart);
         void ClearSessionData();

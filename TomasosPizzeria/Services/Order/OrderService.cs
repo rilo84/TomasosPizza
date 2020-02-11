@@ -1,9 +1,11 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TomasosPizzeria.Data;
 using TomasosPizzeria.Models;
+using TomasosPizzeria.Repositories;
 using TomasosPizzeria.ViewModels;
 
 namespace TomasosPizzeria.Services
@@ -12,11 +14,15 @@ namespace TomasosPizzeria.Services
     {
         private readonly TomasosContext context;
         private readonly ISessionService sessionService;
+        private readonly IUserRepository userRepository;
+        private readonly UserManager<ApplicationUser> userManager;
 
-        public OrderService(TomasosContext context, ISessionService sessionService)
+        public OrderService(TomasosContext context, ISessionService sessionService, IUserRepository userRepository, UserManager<ApplicationUser> userManager)
         {
             this.context = context;
             this.sessionService = sessionService;
+            this.userRepository = userRepository;
+            this.userManager = userManager;
         }
         public void CreateOrder()
         {
@@ -25,9 +31,11 @@ namespace TomasosPizzeria.Services
 
             AddOrder(cart,user);
             AddFood(cart, user);
+            AddBonus(cart, user);
 
             cart = new CartViewModel();
             sessionService.SetCart(cart);
+            
         }
         private void AddOrder(CartViewModel cart, ApplicationUser user)
         {
@@ -57,6 +65,12 @@ namespace TomasosPizzeria.Services
                 });
                 context.SaveChanges();
             }
+        }
+
+        private async Task AddBonus(CartViewModel cart, ApplicationUser user)
+        {
+            new NotImplementedException();
+
         }
     }
 }

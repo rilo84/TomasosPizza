@@ -77,5 +77,11 @@ namespace TomasosPizzeria.Repositories
         {
             return userManager.IsInRoleAsync(user, "PremiumUser");
         }
+
+        public Task<IdentityResult> SetUserBonus(ApplicationUser user, int bonuspoints)
+        {
+            user.BonusPoints = bonuspoints;
+            return userManager.UpdateAsync(user);
+        }
     }
 }

@@ -47,9 +47,16 @@ else
         {
             @if (Model.TotalBonus > 30)
             {
-                <p>Din rabatt: -@Model.Discount</p>
-                <p>Summa inkl rabatt: @(Model.TotalAmount - Model.Discount)</p>
+                <p>Din rabatt: -@Model.Discount kr</p>
+                <p>Summa inkl rabatt: @(Model.TotalAmount - Model.Discount) kr</p>
             }
+            @if (Model.CurrentBonus >= 100)
+            {
+                <p>Grattis! Vi bjuder på den billigaste rätten</p>
+                <p>Din gratisrätts värde är @Model.BonusMoney kr</p>
+                <p>Summa inkl gratisrätt: @(Model.TotalAmount - Model.Discount - Model.BonusMoney) kr</p>
+            }
+            <p>Nuvarande Bonus: @Model.CurrentBonus</p>
             <p>Bonus för detta köp: @Model.TotalBonus</p>
         }
     </div>

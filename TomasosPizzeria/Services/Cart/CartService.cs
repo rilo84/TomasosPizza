@@ -51,8 +51,8 @@ namespace TomasosPizzeria.Services
             if (model.CurrentBonus >= 100)
             {
                 var food = model.Food.OrderBy(f => f.Price).FirstOrDefault();
+
                 model.BonusMoney = food.Price;
-                model.TotalAmount -= food.Price;
             }
         }
 
@@ -65,6 +65,12 @@ namespace TomasosPizzeria.Services
             {
                 model.Discount = model.TotalAmount * 0.2m;
             }
+        }
+
+        public void GetCurrentBonus(CartViewModel model)
+        {
+            var user = sessionService.GetUser();
+            model.CurrentBonus = user.BonusPoints;
         }
 
         public Food MakeFoodItem(int id, OrderViewModel model)
