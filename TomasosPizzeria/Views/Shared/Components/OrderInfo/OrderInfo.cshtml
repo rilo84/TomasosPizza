@@ -1,0 +1,32 @@
+﻿@model OrderDetailsViewModel
+@inject TomasosContext context;
+
+    <tr>
+        <th>Antal</th>
+        <th>Maträtt</th>
+    </tr>
+
+@foreach (var food in Model.Foods)
+{
+    <tr>
+        <td>@context.BestallningMatratt.Where(o => o.BestallningId == Model.OrderId && o.MatrattId == food.MatrattId).Select(f => f.Antal).FirstOrDefault()</td>
+        <td>@food.MatrattNamn</td>
+    </tr>
+}
+
+<script>
+    $("#viewDetailsBtn").click(function () {
+        var toogle = false;
+
+        if (toogle == false) {
+            $("#@Model.OrderId-orderInfo").hide();
+            toogle = !toggle;
+        }
+        else {
+            $("#@Model.OrderId-orderInfo").show();
+            toogle = !toggle;
+        }
+});
+</script>
+
+

@@ -18,47 +18,27 @@
 
     <div class="row">
         <div class="col mt-2">
-            <form asp-controller="Admin"
-                  asp-action="OrderDetails"
-                  data-ajax="true"
-                  data-ajax-method="GET"
-                  data-ajax-mode="replace"
-                  data-ajax-update="#orderDetails">
-                
-                <select class="form-control" id="userSelect" asp-for="UserId">
-                    <option></option>
-                    @foreach (var user in Model.Users)
-                    {
-                        <option>@user.Name</option>
-                    }
-                </select>
+            <div id="orderUsers">
+                <h3> Välj kund:</h3>
+                <form asp-controller="Admin"
+                      asp-action="OrderDetails"
+                      data-ajax="true"
+                      data-ajax-method="GET"
+                      data-ajax-mode="replace"
+                      data-ajax-update="#orderDetails">
+                        
+                    <select class="form-control" id="userSelect" asp-for="UserId">
+                        <option></option>
+                        @foreach (var user in Model.Users)
+                        {
+                            <option value="@user.Id">@user.Name</option>
+                        }
+                    </select>
 
-                <input type="submit" class="btn btn-danger" aria-pressed="true" />
-            </form>
+                    <input type="submit" class="btn btn-danger" aria-pressed="true" />
+                </form>
+            </div>
             <div id="orderDetails"></div>
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th scope="col">Namn</th>
-                        <th scope="col"></th>
-                        <th scope="col"></th>
-                        <th scope="col">Ändra medlemskap</th>
-                        <th scope="col"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>
-                        </td>
-                        <td>
-                        </td>
-                        <td><button class="btn btn-danger userManagementBtn">Ta bort</button></td>
-                        <td>
-                        </td>
-                        <td><button type="submit" class="btn btn-danger userManagementBtn">Ändra</button></td>
-                    </tr>
-                </tbody>
-            </table>
         </div>
     </div>
 </div>

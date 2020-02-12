@@ -1,6 +1,67 @@
-﻿@model  AdminOrderViewModel
+﻿@model AdminOrderViewModel
 
-@foreach (var order in model.Orders)
-{
-    <p>@order.</p>
-}
+<h2>Ej levererade</h2>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Orderdatum</th>
+            <th scope="col">Totalbelopp</th>
+            <th scope="col"></th>
+            <th scope="col">Ändra status</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var order in Model.Orders)
+        {
+            if (!order.Levererad)
+            {
+                <tr>
+                    <td>@order.BestallningDatum</td>
+                    <td>@order.Totalbelopp</td>
+                    <td>
+                        <a asp-controller="Admin"
+                           asp-action="OrderInfo"
+                           asp-route-orderId="@order.BestallningId"
+                           data-ajax="true"
+                           data-ajax-method="GET"
+                           data-ajax-mode="replace"
+                           data-ajax-update="#@order.BestallningId-orderInfo"
+                           role="link" aria-pressed="true" id="viewDetailsBtn">Visa order</a>
+                    </td>
+                    <td><input type="checkbox" class="form-check-input d-flex justify-content-center" value="@order.Levererad"></td>
+                    <td><button type="submit" class="btn btn-danger userManagementBtn">Spara</button></td>
+                    <td></td>
+                </tr>
+                <tbody id="@order.BestallningId-orderInfo"></tbody>
+            }
+
+        }
+</table>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Orderdatum</th>
+            <th scope="col">Totalbelopp</th>
+            <th scope="col"></th>
+            <th scope="col">Ändra status</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var order in Model.Orders)
+        {
+            if (order.Levererad)
+            {
+                <tr>
+                    <td>@order.BestallningDatum</td>
+                    <td>@order.Totalbelopp</td>
+                    <td><a role="button" class="btn btn-danger" aria-pressed="true">Orderdetaljer</a></td>
+                    <td><input type="checkbox" class="form-check-input" value="@order.Levererad"></td>
+                    <td><button type="submit" class="btn btn-danger userManagementBtn">Spara</button></td>
+                    <td></td>
+                </tr>
+            <tbody id="@order.BestallningId-orderInfo"></tbody>
+        }
+    }  
+</table>

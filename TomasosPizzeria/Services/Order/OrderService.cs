@@ -31,7 +31,6 @@ namespace TomasosPizzeria.Services
 
             AddOrder(cart,user);
             AddFood(cart, user);
-            AddBonus(cart, user);
 
             cart = new CartViewModel();
             sessionService.SetCart(cart);
@@ -67,10 +66,5 @@ namespace TomasosPizzeria.Services
             }
         }
 
-        private async Task AddBonus(CartViewModel cart, ApplicationUser user)
-        {
-            new NotImplementedException();
-
-        }
     }
 }

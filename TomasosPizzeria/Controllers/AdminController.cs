@@ -58,7 +58,7 @@ namespace TomasosPizzeria.Controllers
             var model = new AdminOrderViewModel();
 
             model.Users = userManager.Users.ToList();
-            model.Orders = orderRepository.GetAllOrders();
+            
 
             return View(model);
         }
@@ -112,9 +112,21 @@ namespace TomasosPizzeria.Controllers
         [HttpGet]
         public IActionResult OrderDetails(AdminOrderViewModel model)
         {
-            model.Orders = model.Orders.Where(o => o.KundId == model.UserId).ToList();
+
+            model.Orders = orderRepository.GetAllCustomerOrders(model.UserId);
             
             return ViewComponent("OrderDetails", model);
+        }
+
+        [HttpGet]
+        public IActionResult OrderInfo(int orderId)
+        {
+            var model = new OrderDetailsViewModel();
+
+            model.Foods = orderRepository.GetOrderFoodDetails(orderId);
+            model.OrderId = orderId;
+
+            return ViewComponent("OrderInfo", model);
         }
     }
 }

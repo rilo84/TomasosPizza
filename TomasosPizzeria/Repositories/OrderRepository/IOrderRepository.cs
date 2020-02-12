@@ -9,5 +9,9 @@ namespace TomasosPizzeria.Repositories
     public interface IOrderRepository
     {
         List<Bestallning> GetAllOrders();
+
+        List<Bestallning> GetAllCustomerOrders(string customerId);
+        List<BestallningMatratt> GetOrderFood(int orderId);
+        List<Matratt> GetOrderFoodDetails(int orderId);
     }
 }
