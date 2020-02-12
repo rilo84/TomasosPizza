@@ -14,6 +14,6 @@ namespace TomasosPizzeria.ViewModels
         public List<Bestallning> Orders { get; set; }
         public string UserId { get; set; }
         public int OrderId { get; set; }
-        public bool Delivered { get; set; }
+        public List<ApplicationUser> Customers { get; set; }
     }
 }

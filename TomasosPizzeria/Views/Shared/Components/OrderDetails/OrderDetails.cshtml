@@ -1,4 +1,5 @@
 ﻿@model AdminOrderViewModel
+@inject UserManager<ApplicationUser> userManager;
 
 <h2>Ej levererade</h2>
 <table class="table table-hover">
@@ -6,9 +7,10 @@
         <tr>
             <th scope="col">Orderdatum</th>
             <th scope="col">Totalbelopp</th>
-            <th scope="col"></th>
+            <th scope="col">Kund</th>
+            <th scope="col">Detaljer</th>
             <th scope="col">Ändra status</th>
-            <th scope="col"></th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -19,6 +21,7 @@
         <tr>
             <td>@order.BestallningDatum</td>
             <td>@order.Totalbelopp</td>
+            <td>@userManager.Users.Where(u => u.Id == order.KundId).Select(u => u.Name).FirstOrDefault()</td>
             <td>
                 <a asp-controller="Admin"
                    asp-action="OrderInfo"
@@ -29,32 +32,33 @@
                    data-ajax-update="#@order.BestallningId-orderInfo"
                    role="link" aria-pressed="true" id="@order.BestallningId-viewDetailsBtn">Visa order</a>
             </td>
+
             @if (User.IsInRole("Admin"))
             {
-            <td>
-                <form asp-controller="Admin"
-                      asp-action="SetOrderDelivered"
-                      asp-route-OrderId="@order.BestallningId"
-                      asp-route-UserId="@Model.UserId"
-                      data-ajax="true"
-                      data-ajax-method="GET"
-                      data-ajax-mode="replace"
-                      data-ajax-update="#orderDetails">
-                    <button type="submit" class="btn btn-danger userManagementBtn">Levererad</button>
-                </form>
-            </td>
-            <td>
-                <form asp-controller="Admin"
-                      asp-action="RemoveOrder"
-                      asp-route-orderId="@order.BestallningId"
-                      asp-route-UserId="@Model.UserId"
-                      data-ajax="true"
-                      data-ajax-method="GET"
-                      data-ajax-mode="replace"
-                      data-ajax-update="#orderDetails">
-                    <button type="submit" class="btn btn-danger userManagementBtn">Ta bort</button>
-                </form>
-            </td>
+                <td>
+                    <form asp-controller="Admin"
+                          asp-action="SetOrderDelivered"
+                          asp-route-OrderId="@order.BestallningId"
+                          asp-route-UserId="@Model.UserId"
+                          data-ajax="true"
+                          data-ajax-method="GET"
+                          data-ajax-mode="replace"
+                          data-ajax-update="#orderDetails">
+                        <button type="submit" class="btn btn-danger userManagementBtn">Levererad</button>
+                    </form>
+                </td>
+                <td>
+                    <form asp-controller="Admin"
+                          asp-action="RemoveOrder"
+                          asp-route-orderId="@order.BestallningId"
+                          asp-route-UserId="@Model.UserId"
+                          data-ajax="true"
+                          data-ajax-method="GET"
+                          data-ajax-mode="replace"
+                          data-ajax-update="#orderDetails">
+                        <button type="submit" class="btn btn-danger userManagementBtn">Ta bort</button>
+                    </form>
+                </td>
             }
         </tr>
                 <tbody id="@order.BestallningId-orderInfo"></tbody>
@@ -68,7 +72,8 @@
         <tr>
             <th scope="col">Orderdatum</th>
             <th scope="col">Totalbelopp</th>
-            <th scope="col"></th>
+            <th scope="col">Kund</th>
+            <th scope="col">Detaljer</th>
             <th scope="col">Ändra status</th>
             <th scope="col"></th>
         </tr>
@@ -81,7 +86,7 @@
         <tr>
             <td>@order.BestallningDatum</td>
             <td>@order.Totalbelopp</td>
-
+            <td>@userManager.Users.Where(u => u.Id == order.KundId).Select(u => u.Name).FirstOrDefault()</td>
             <td>
                 <a asp-controller="Admin"
                    asp-action="OrderInfo"
@@ -94,30 +99,30 @@
             </td>
             @if (User.IsInRole("Admin"))
             {
-            <td>
-                <form asp-controller="Admin"
-                      asp-action="SetOrderUndelivered"
-                      asp-route-OrderId="@order.BestallningId"
-                      asp-route-UserId="@Model.UserId"
-                      data-ajax="true"
-                      data-ajax-method="GET"
-                      data-ajax-mode="replace"
-                      data-ajax-update="#orderDetails">
-                    <button type="submit" class="btn btn-danger userManagementBtn">Olevererad</button>
-                </form>
-            </td>
-            <td>
-                <form asp-controller="Admin"
-                      asp-action="RemoveOrder"
-                      asp-route-orderId="@order.BestallningId"
-                      asp-route-UserId="@Model.UserId"
-                      data-ajax="true"
-                      data-ajax-method="GET"
-                      data-ajax-mode="replace"
-                      data-ajax-update="#orderDetails">
-                    <button type="submit" class="btn btn-danger userManagementBtn">Ta bort</button>
-                </form>
-            </td>
+                <td>
+                    <form asp-controller="Admin"
+                          asp-action="SetOrderUndelivered"
+                          asp-route-OrderId="@order.BestallningId"
+                          asp-route-UserId="@Model.UserId"
+                          data-ajax="true"
+                          data-ajax-method="GET"
+                          data-ajax-mode="replace"
+                          data-ajax-update="#orderDetails">
+                        <button type="submit" class="btn btn-danger userManagementBtn">Olevererad</button>
+                    </form>
+                </td>
+                <td>
+                    <form asp-controller="Admin"
+                          asp-action="RemoveOrder"
+                          asp-route-orderId="@order.BestallningId"
+                          asp-route-UserId="@Model.UserId"
+                          data-ajax="true"
+                          data-ajax-method="GET"
+                          data-ajax-mode="replace"
+                          data-ajax-update="#orderDetails">
+                        <button type="submit" class="btn btn-danger userManagementBtn">Ta bort</button>
+                    </form>
+                </td>
             }
         </tr>
             <tbody id="@order.BestallningId-orderInfo"></tbody>

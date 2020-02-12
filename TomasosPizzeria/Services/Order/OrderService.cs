@@ -41,7 +41,7 @@ namespace TomasosPizzeria.Services
             var order = new Bestallning
             {
                 BestallningDatum = DateTime.Now,
-                Totalbelopp = (int)(cart.TotalAmount - cart.Discount),
+                Totalbelopp = (int)(cart.TotalAmount - cart.Discount -cart.BonusMoney),
                 Levererad = false,
                 KundId = user.Id
             };

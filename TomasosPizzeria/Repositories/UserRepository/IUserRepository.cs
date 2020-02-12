@@ -18,6 +18,7 @@ namespace TomasosPizzeria.Repositories
         Task<bool> IsPremium(ApplicationUser user);
         Task<ApplicationUser> GetUser(RegisterViewModel model);
         Task<ApplicationUser> GetUser(LoginViewModel model);
+        List<ApplicationUser> GetAllUsers();
         Task<SignInResult> SignInUser(RegisterViewModel model);
         Task<SignInResult> SignInUser(LoginViewModel model);
         Task SignOutUser();

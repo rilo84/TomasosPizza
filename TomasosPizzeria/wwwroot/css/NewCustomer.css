@@ -31,3 +31,11 @@
     margin: 20px;
     color: black;
 }
+
+.form-control{
+    width:300px;
+}
+
+.field-validation-error{
+    color:orangered;
+}

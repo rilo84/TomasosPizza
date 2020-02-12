@@ -17,12 +17,14 @@ namespace TomasosPizzeria.Controllers
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IOrderRepository orderRepository;
+        private readonly IUserRepository userRepository;
 
-        public AdminController(RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager, IOrderRepository orderRepository)
+        public AdminController(RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager, IOrderRepository orderRepository, IUserRepository userRepository)
         {
             this.roleManager = roleManager;
             this.userManager = userManager;
             this.orderRepository = orderRepository;
+            this.userRepository = userRepository;
         }
 
         [HttpGet]
@@ -112,8 +114,13 @@ namespace TomasosPizzeria.Controllers
         [HttpGet]
         public IActionResult OrderDetails(AdminOrderViewModel model)
         {
-
-            model.Orders = orderRepository.GetAllCustomerOrders(model.UserId);
+            if (model.UserId == null)
+            {
+                model.Orders = orderRepository.GetAllOrders();
+                model.Customers = userRepository.GetAllUsers();
+            }
+            else
+                model.Orders = orderRepository.GetAllCustomerOrders(model.UserId);
             
             return ViewComponent("OrderDetails", model);
         }

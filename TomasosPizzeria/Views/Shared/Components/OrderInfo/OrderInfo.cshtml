@@ -6,16 +6,18 @@
         <th>Maträtt</th>
         <th></th>
         <th></th>
+        <th></th>
     </tr>
 
 @foreach (var food in Model.Foods)
 {
-    <tr>
-        <td>@context.BestallningMatratt.Where(o => o.BestallningId == Model.OrderId && o.MatrattId == food.MatrattId).Select(f => f.Antal).FirstOrDefault()</td>
-        <td>@food.MatrattNamn</td>
-        <td></td>
-        <td></td>
-    </tr>
+<tr>
+    <td>@context.BestallningMatratt.Where(o => o.BestallningId == Model.OrderId && o.MatrattId == food.MatrattId).Select(f => f.Antal).FirstOrDefault()</td>
+    <td>@food.MatrattNamn</td>
+    <td></td>
+    <td></td>
+    <td></td>
+</tr>
 }
 
 <script>

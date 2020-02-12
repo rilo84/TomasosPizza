@@ -83,5 +83,10 @@ namespace TomasosPizzeria.Repositories
             user.BonusPoints = bonuspoints;
             return userManager.UpdateAsync(user);
         }
+
+        public List<ApplicationUser> GetAllUsers()
+        {
+            return userManager.Users.ToList();
+        }
     }
 }
