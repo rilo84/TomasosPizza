@@ -27,10 +27,20 @@
                            data-ajax-method="GET"
                            data-ajax-mode="replace"
                            data-ajax-update="#@order.BestallningId-orderInfo"
-                           role="link" aria-pressed="true" id="viewDetailsBtn">Visa order</a>
+                           role="link" aria-pressed="true" id="@order.BestallningId-viewDetailsBtn">Visa order</a>
                     </td>
-                    <td><input type="checkbox" class="form-check-input d-flex justify-content-center" value="@order.Levererad"></td>
-                    <td><button type="submit" class="btn btn-danger userManagementBtn">Spara</button></td>
+                    <td>
+                        <form asp-controller="Admin"
+                              asp-action="SetDelivered"
+                              asp-route-orderId="@order.BestallningId"
+                              asp-route-userId="@Model.UserId"
+                              data-ajax="true"
+                              data-ajax-method="GET"
+                              data-ajax-mode="replace"
+                              data-ajax-update="#orderDetails">               
+                              <button type="submit" class="btn btn-danger userManagementBtn">Levererad</button>
+                       </form>
+                    </td>
                     <td></td>
                 </tr>
                 <tbody id="@order.BestallningId-orderInfo"></tbody>
@@ -38,6 +48,7 @@
 
         }
 </table>
+<h2>Levererade</h2>
 <table class="table table-hover">
     <thead>
         <tr>

@@ -15,18 +15,10 @@
 }
 
 <script>
-    $("#viewDetailsBtn").click(function () {
-        var toogle = false;
-
-        if (toogle == false) {
-            $("#@Model.OrderId-orderInfo").hide();
-            toogle = !toggle;
-        }
-        else {
-            $("#@Model.OrderId-orderInfo").show();
-            toogle = !toggle;
-        }
-});
+    $("#@Model.OrderId-viewDetailsBtn").click(function () {
+       
+            $("#@Model.OrderId-orderInfo").toggle();
+        });
 </script>
 
 

@@ -128,5 +128,17 @@ namespace TomasosPizzeria.Controllers
 
             return ViewComponent("OrderInfo", model);
         }
+
+        [HttpGet]
+        public IActionResult SetDelivered(AdminOrderViewModel model,int orderId)
+        {
+            
+            orderRepository.SetDelivered(orderId);
+
+            model.Orders = orderRepository.GetAllCustomerOrders(model.UserId);
+
+            return ViewComponent("OrderDetails", model);
+        }
+
     }
 }
