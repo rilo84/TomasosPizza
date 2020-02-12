@@ -16,33 +16,47 @@
         {
             if (!order.Levererad)
             {
-                <tr>
-                    <td>@order.BestallningDatum</td>
-                    <td>@order.Totalbelopp</td>
-                    <td>
-                        <a asp-controller="Admin"
-                           asp-action="OrderInfo"
-                           asp-route-orderId="@order.BestallningId"
-                           data-ajax="true"
-                           data-ajax-method="GET"
-                           data-ajax-mode="replace"
-                           data-ajax-update="#@order.BestallningId-orderInfo"
-                           role="link" aria-pressed="true" id="@order.BestallningId-viewDetailsBtn">Visa order</a>
-                    </td>
-                    <td>
-                        <form asp-controller="Admin"
-                              asp-action="SetDelivered"
-                              asp-route-orderId="@order.BestallningId"
-                              asp-route-userId="@Model.UserId"
-                              data-ajax="true"
-                              data-ajax-method="GET"
-                              data-ajax-mode="replace"
-                              data-ajax-update="#orderDetails">               
-                              <button type="submit" class="btn btn-danger userManagementBtn">Levererad</button>
-                       </form>
-                    </td>
-                    <td></td>
-                </tr>
+        <tr>
+            <td>@order.BestallningDatum</td>
+            <td>@order.Totalbelopp</td>
+            <td>
+                <a asp-controller="Admin"
+                   asp-action="OrderInfo"
+                   asp-route-OrderId="@order.BestallningId"
+                   data-ajax="true"
+                   data-ajax-method="GET"
+                   data-ajax-mode="replace"
+                   data-ajax-update="#@order.BestallningId-orderInfo"
+                   role="link" aria-pressed="true" id="@order.BestallningId-viewDetailsBtn">Visa order</a>
+            </td>
+            @if (User.IsInRole("Admin"))
+            {
+            <td>
+                <form asp-controller="Admin"
+                      asp-action="SetOrderDelivered"
+                      asp-route-OrderId="@order.BestallningId"
+                      asp-route-UserId="@Model.UserId"
+                      data-ajax="true"
+                      data-ajax-method="GET"
+                      data-ajax-mode="replace"
+                      data-ajax-update="#orderDetails">
+                    <button type="submit" class="btn btn-danger userManagementBtn">Levererad</button>
+                </form>
+            </td>
+            <td>
+                <form asp-controller="Admin"
+                      asp-action="RemoveOrder"
+                      asp-route-orderId="@order.BestallningId"
+                      asp-route-UserId="@Model.UserId"
+                      data-ajax="true"
+                      data-ajax-method="GET"
+                      data-ajax-mode="replace"
+                      data-ajax-update="#orderDetails">
+                    <button type="submit" class="btn btn-danger userManagementBtn">Ta bort</button>
+                </form>
+            </td>
+            }
+        </tr>
                 <tbody id="@order.BestallningId-orderInfo"></tbody>
             }
 
@@ -64,15 +78,49 @@
         {
             if (order.Levererad)
             {
-                <tr>
-                    <td>@order.BestallningDatum</td>
-                    <td>@order.Totalbelopp</td>
-                    <td><a role="button" class="btn btn-danger" aria-pressed="true">Orderdetaljer</a></td>
-                    <td><input type="checkbox" class="form-check-input" value="@order.Levererad"></td>
-                    <td><button type="submit" class="btn btn-danger userManagementBtn">Spara</button></td>
-                    <td></td>
-                </tr>
+        <tr>
+            <td>@order.BestallningDatum</td>
+            <td>@order.Totalbelopp</td>
+
+            <td>
+                <a asp-controller="Admin"
+                   asp-action="OrderInfo"
+                   asp-route-OrderId="@order.BestallningId"
+                   data-ajax="true"
+                   data-ajax-method="GET"
+                   data-ajax-mode="replace"
+                   data-ajax-update="#@order.BestallningId-orderInfo"
+                   role="link" aria-pressed="true" id="@order.BestallningId-viewDetailsBtn">Visa order</a>
+            </td>
+            @if (User.IsInRole("Admin"))
+            {
+            <td>
+                <form asp-controller="Admin"
+                      asp-action="SetOrderUndelivered"
+                      asp-route-OrderId="@order.BestallningId"
+                      asp-route-UserId="@Model.UserId"
+                      data-ajax="true"
+                      data-ajax-method="GET"
+                      data-ajax-mode="replace"
+                      data-ajax-update="#orderDetails">
+                    <button type="submit" class="btn btn-danger userManagementBtn">Olevererad</button>
+                </form>
+            </td>
+            <td>
+                <form asp-controller="Admin"
+                      asp-action="RemoveOrder"
+                      asp-route-orderId="@order.BestallningId"
+                      asp-route-UserId="@Model.UserId"
+                      data-ajax="true"
+                      data-ajax-method="GET"
+                      data-ajax-mode="replace"
+                      data-ajax-update="#orderDetails">
+                    <button type="submit" class="btn btn-danger userManagementBtn">Ta bort</button>
+                </form>
+            </td>
+            }
+        </tr>
             <tbody id="@order.BestallningId-orderInfo"></tbody>
         }
-    }  
-</table>
+    }
+    </table>

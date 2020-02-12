@@ -36,10 +36,28 @@ namespace TomasosPizzeria.Repositories
             return context.BestallningMatratt.Where(f => f.BestallningId == orderID).Select(f => f.Matratt).ToList();
         }
 
+        public void RemoveOrder(int orderId)
+        {
+            var foodList = context.BestallningMatratt.Where(o => o.BestallningId == orderId).ToList();
+            var order = context.Bestallning.Where(o => o.BestallningId == orderId).FirstOrDefault();
+
+            context.BestallningMatratt.RemoveRange(foodList);
+            context.Bestallning.Remove(order);
+            context.SaveChanges();
+        }
+
         public void SetDelivered(int orderId)
         {
             var order = context.Bestallning.Where(o => o.BestallningId == orderId).FirstOrDefault();
             order.Levererad = true;
+            context.Bestallning.Update(order);
+            context.SaveChanges();
+        }
+
+        public void SetUndelivered(int orderId)
+        {
+            var order = context.Bestallning.Where(o => o.BestallningId == orderId).FirstOrDefault();
+            order.Levererad = false;
             context.Bestallning.Update(order);
             context.SaveChanges();
         }

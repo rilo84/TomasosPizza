@@ -130,14 +130,31 @@ namespace TomasosPizzeria.Controllers
         }
 
         [HttpGet]
-        public IActionResult SetDelivered(AdminOrderViewModel model,int orderId)
+        public IActionResult SetOrderDelivered(AdminOrderViewModel model)
         {
             
-            orderRepository.SetDelivered(orderId);
+            orderRepository.SetDelivered(model.OrderId);
 
-            model.Orders = orderRepository.GetAllCustomerOrders(model.UserId);
+            return RedirectToAction("OrderDetails", model);
+        }
 
-            return ViewComponent("OrderDetails", model);
+        [HttpGet]
+        public IActionResult SetOrderUndelivered(AdminOrderViewModel model)
+        {
+
+            orderRepository.SetUndelivered(model.OrderId);
+
+            return RedirectToAction("OrderDetails", model);
+        }
+
+
+        [HttpGet]
+        public IActionResult RemoveOrder(AdminOrderViewModel model)
+        {
+
+            orderRepository.RemoveOrder(model.OrderId);
+
+            return RedirectToAction("OrderDetails", model);
         }
 
     }

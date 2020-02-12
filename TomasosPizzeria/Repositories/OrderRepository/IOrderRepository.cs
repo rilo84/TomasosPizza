@@ -13,7 +13,9 @@ namespace TomasosPizzeria.Repositories
         List<Bestallning> GetAllCustomerOrders(string customerId);
         List<BestallningMatratt> GetOrderFood(int orderId);
         List<Matratt> GetOrderFoodDetails(int orderId);
-
+        void RemoveOrder(int orderId);
         void SetDelivered(int orderId);
+
+        void SetUndelivered(int orderId);
     }
 }
