@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -15,6 +16,7 @@ using TomasosPizzeria.ViewModels;
 
 namespace TomasosPizzeria.Controllers
 {
+    [Authorize]
     public class OrderController : Controller
     {
         private IFoodRepository _foodRepository;

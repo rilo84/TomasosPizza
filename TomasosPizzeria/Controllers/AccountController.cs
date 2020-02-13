@@ -24,12 +24,14 @@ namespace TomasosPizzeria.Controllers
             this.sessionService = sessionService;
         }
 
+        [Route("Register")]
         [HttpGet]
         public IActionResult Register()
         {
             return View();
         }
 
+        [Route("Register")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterViewModel model)
@@ -59,12 +61,14 @@ namespace TomasosPizzeria.Controllers
             return View();
         }
 
+        [Route("Login")]
         [HttpGet]
         public IActionResult Login()
         {
             return View();
         }
 
+        [Route("Login")]
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
@@ -95,6 +99,7 @@ namespace TomasosPizzeria.Controllers
             return RedirectToAction("Index","Home");
         }
 
+        [Route("Minsida")]
         [HttpGet]
         public IActionResult CustomerHome()
         {

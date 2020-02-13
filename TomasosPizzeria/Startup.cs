@@ -38,7 +38,7 @@ namespace TomasosPizzeria
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultTokenProviders();
 
-            services.AddTransient<ICustomerRepository, CustomerRepository>();
+            
             services.AddTransient<IFoodRepository, FoodRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IOrderRepository, OrderRepository>();
