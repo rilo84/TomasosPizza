@@ -24,7 +24,7 @@ else
                 <tr>
                     <td>@food.OrderAmount</td>
                     <td>@food.Name</td>
-                    <td>@food.FoodTotal</td>
+                    <td>@food.FoodTotal.ToString("C0")</td>
                     <td>
                         <a asp-controller="Order"
                            asp-action="RemoveFromCart"
@@ -42,19 +42,19 @@ else
     </table>
 
     <div id="paymentDetails">
-        <p>Summa: @Model.TotalAmount kr</p>
+        <p>Summa: @Model.TotalAmount.ToString("C0")</p>
         @if (User.IsInRole("PremiumUser"))
         {
             @if (Model.TotalBonus > 30)
             {
-                <p>Din rabatt: -@Model.Discount kr</p>
-                <p>Summa inkl rabatt: @(Model.TotalAmount - Model.Discount) kr</p>
+                <p>Din rabatt: -@Model.Discount.ToString("C0")</p>
+                <p>Summa inkl rabatt: @((Model.TotalAmount - Model.Discount).ToString("C0"))</p>
             }
             @if (Model.CurrentBonus >= 100)
             {
                 <p>Grattis! Vi bjuder på den billigaste rätten</p>
-                <p>Din gratisrätts värde är @Model.BonusMoney kr</p>
-                <p>Summa inkl gratisrätt: @(Model.TotalAmount - Model.Discount - Model.BonusMoney) kr</p>
+                <p>Din gratisrätts värde är @Model.BonusMoney.ToString("C0")</p>
+                <p>Summa inkl gratisrätt: @((Model.TotalAmount - Model.Discount - Model.BonusMoney).ToString("C0"))</p>
             }
             <p>Nuvarande Bonus: @Model.CurrentBonus</p>
             <p>Bonus för detta köp: @Model.TotalBonus</p>
