@@ -1,18 +1,16 @@
 ﻿@model FoodManageViewModel
 
     <form>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Namn</th>
-                    <th>Beskrivning</th>
-                    <th>Pris</th>
-                </tr>
-            </thead>
-            <tr>
-                <td><input type="text" value="@Model.Food.MatrattNamn"/></td>
-                <td><input type="text" value="@Model.Food.Beskrivning" /></td>
-                <td><input type="text" value="@Model.Food.Pris" /></td>
-            </tr>
-        </table>
+        <div class="form-group">
+            <label>Namn:</label>
+            <input type="text" class="form-control" value="@Model.Food.MatrattNamn">
+        </div>
+        <div class="form-group">
+            <label>Beskrivning:</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3">@Model.Food.Beskrivning</textarea>
+        </div>
+        <div class="form-group">
+            <label>Pris:</label>
+            <input type="text" class="form-control" value="@Model.Food.Pris">
+        </div>
     </form>
