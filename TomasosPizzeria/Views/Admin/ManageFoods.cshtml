@@ -1,0 +1,25 @@
+﻿@model FoodManageViewModel
+
+@{
+    ViewBag.Title = "Admin";
+}
+
+@section style{
+    <link rel="stylesheet" href="~/css/Admin.css" />
+}
+
+<div class="container d-flex flex-column align-items-center">
+    <div class="row">
+        <div class="col mt-2">
+            <h1>Hantera Användare</h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col mt-2">
+            <select asp-items="@Model.CategorySelectList"></select>
+            <select asp-items="@Model.FoodSelectList"></select>
+            <select asp-items="@Model.IngredientSelectList"></select>
+        </div>
+    </div>
+</div>

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using TomasosPizzeria.Data;
 using TomasosPizzeria.ViewModels;
 using TomasosPizzeria.Repositories;
+using TomasosPizzeria.Services;
 
 namespace TomasosPizzeria.Controllers
 {
@@ -18,13 +19,23 @@ namespace TomasosPizzeria.Controllers
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IOrderRepository orderRepository;
         private readonly IUserRepository userRepository;
+        private readonly IFoodRepository foodRepository;
+        private readonly ISelectService selectService;
 
-        public AdminController(RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager, IOrderRepository orderRepository, IUserRepository userRepository)
+        public AdminController(
+            RoleManager<IdentityRole> roleManager, 
+            UserManager<ApplicationUser> userManager, 
+            IOrderRepository orderRepository, 
+            IUserRepository userRepository, 
+            IFoodRepository foodRepository,
+            ISelectService selectService )
         {
             this.roleManager = roleManager;
             this.userManager = userManager;
             this.orderRepository = orderRepository;
             this.userRepository = userRepository;
+            this.foodRepository = foodRepository;
+            this.selectService = selectService;
         }
 
         [HttpGet]
@@ -61,6 +72,21 @@ namespace TomasosPizzeria.Controllers
 
             model.Users = userManager.Users.ToList();
             
+
+            return View(model);
+        }
+
+        [HttpGet]
+        public IActionResult ManageFoods()
+        {
+
+            var model = new FoodManageViewModel();
+
+            model.Foods = foodRepository.GetAllFoods();
+
+            model.CategorySelectList = selectService.GetListCategory();
+            model.FoodSelectList = selectService.GetListFoods();
+            model.IngredientSelectList = selectService.GetListIngredients();
 
             return View(model);
         }
@@ -163,6 +189,8 @@ namespace TomasosPizzeria.Controllers
 
             return RedirectToAction("OrderDetails", model);
         }
+
+
 
     }
 }

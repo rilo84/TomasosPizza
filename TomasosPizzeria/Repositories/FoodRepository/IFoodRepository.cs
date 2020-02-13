@@ -11,5 +11,8 @@ namespace TomasosPizzeria.Repositories
     {
         Menu GetMenu();
         Matratt GetFoodById(int Id);
+        List<Matratt> GetAllFoods();
+        List<MatrattTyp> GetAllCategories();
+        List<Produkt> GetAllProducts();
     }
 }

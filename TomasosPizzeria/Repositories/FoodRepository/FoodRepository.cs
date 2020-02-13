@@ -15,6 +15,21 @@ namespace TomasosPizzeria.Repositories
             _context = context;
         }
 
+        public List<MatrattTyp> GetAllCategories()
+        {
+            return _context.MatrattTyp.ToList();
+        }
+
+        public List<Matratt> GetAllFoods()
+        {
+            return _context.Matratt.ToList();
+        }
+
+        public List<Produkt> GetAllProducts()
+        {
+            return _context.Produkt.ToList();
+        }
+
         public Matratt GetFoodById(int Id)
         {
             return _context.Matratt.FirstOrDefault(food => food.MatrattId == Id);
