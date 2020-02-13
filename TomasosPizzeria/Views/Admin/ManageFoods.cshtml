@@ -10,16 +10,44 @@
 
 <div class="container d-flex flex-column align-items-center">
     <div class="row">
-        <div class="col mt-2">
-            <h1>Hantera Användare</h1>
+        <div class="col mt-5">
+            <h1>Hantera Maträtter</h1>
         </div>
     </div>
 
     <div class="row">
-        <div class="col mt-2">
-            <select asp-items="@Model.CategorySelectList"></select>
-            <select asp-items="@Model.FoodSelectList"></select>
-            <select asp-items="@Model.IngredientSelectList"></select>
+        <div class="col mt-3">
+            <button onclick="toogleDiv('#changeFood')" class="btn btn-danger adminHomeBtn" role="button" aria-pressed="true">Ändra befintlig maträtt</button>
         </div>
     </div>
+
+    <div id="changeFood">
+        <h5>Välj Maträtt:</h5>
+        <form asp-controller="Admin" asp-action="GetFoodDetails"
+              data-ajax="true"
+              data-ajax-method="GET"
+              data-ajax-mode="replace"
+              data-ajax-update="#foodDetails">
+            <select class="form-control" asp-for=FoodId asp-items="@Model.FoodSelectList"></select>
+            <input type="submit" class="btn btn-danger" value="Ändra" />
+        </form>
+        <div id="foodDetails"></div>
+    </div>
+
+    <div class="row">
+        <div class="col mt-3">
+            <button onclick="toogleDiv('#createFood')" class="btn btn-danger adminHomeBtn" role="button" aria-pressed="true">Skapa ny maträtt</button>
+        </div>
+    </div>
+
+    <div id="createFood">hej</div>
+
+    <div class="row">
+        <div class="col mt-3">
+            <button onclick="toogleDiv('#createIngredient')" class="btn btn-danger adminHomeBtn" role="button" aria-pressed="true">Skapa ny ingrediens</button>
+        </div>
+    </div>
+
+    <div id="createIngredient">hej</div>
 </div>
+

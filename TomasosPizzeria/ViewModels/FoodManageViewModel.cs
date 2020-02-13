@@ -11,9 +11,9 @@ namespace TomasosPizzeria.ViewModels
     {
         public List<Matratt> Foods { get; set; }
         public List<SelectListItem> CategorySelectList { get; set; }
-
         public List<SelectListItem> FoodSelectList { get; set; }
-
         public List<SelectListItem> IngredientSelectList { get; set; }
+        public int FoodId { get; set; }
+        public Matratt Food { get; set; }
     }
 }

@@ -1,0 +1,18 @@
+﻿@model FoodManageViewModel
+
+    <form>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Namn</th>
+                    <th>Beskrivning</th>
+                    <th>Pris</th>
+                </tr>
+            </thead>
+            <tr>
+                <td><input type="text" value="@Model.Food.MatrattNamn"/></td>
+                <td><input type="text" value="@Model.Food.Beskrivning" /></td>
+                <td><input type="text" value="@Model.Food.Pris" /></td>
+            </tr>
+        </table>
+    </form>

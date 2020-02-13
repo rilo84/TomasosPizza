@@ -190,6 +190,12 @@ namespace TomasosPizzeria.Controllers
             return RedirectToAction("OrderDetails", model);
         }
 
+        [HttpGet]
+        public IActionResult GetFoodDetails(FoodManageViewModel model)
+        {
+            model.Food = foodRepository.GetFoodById(model.FoodId);
+            return ViewComponent("FoodDetails", model);
+        }
 
 
     }

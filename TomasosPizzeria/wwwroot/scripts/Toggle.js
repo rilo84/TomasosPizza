@@ -1,0 +1,3 @@
+﻿toogleDiv = (item) => {
+    $(item).toggle();
+}
