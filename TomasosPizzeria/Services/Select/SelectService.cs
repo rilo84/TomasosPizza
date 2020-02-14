@@ -16,15 +16,23 @@ namespace TomasosPizzeria.Services
         {
             this.foodRepository = foodRepository;
         }
-        public List<SelectListItem> GetListCategory()
+        public List<SelectListItem> GetListCategory(string defaultValue)
         {
             var listNums = new List<SelectListItem>();
             var categories = foodRepository.GetAllCategories();
 
             foreach (var category in categories)
             {
-                listNums.Add(new SelectListItem { Text = category.Beskrivning, Value = category.MatrattTyp1.ToString() });
+                if (category.Beskrivning == defaultValue)
+                {
+                    listNums.Add(new SelectListItem(category.Beskrivning, category.MatrattTyp1.ToString(),true));
+                }
+                else
+                {
+                    listNums.Add(new SelectListItem(category.Beskrivning, category.MatrattTyp1.ToString(),false));
+                }
             }
+       
             return listNums;
 
         }
@@ -45,6 +53,18 @@ namespace TomasosPizzeria.Services
         {
             var listNums = new List<SelectListItem>();
             var ingredients = foodRepository.GetAllProducts();
+
+            foreach (var ingredient in ingredients)
+            {
+                listNums.Add(new SelectListItem { Text = ingredient.ProduktNamn, Value = ingredient.ProduktId.ToString() });
+            }
+            return listNums;
+        }
+
+        public List<SelectListItem> GetListIngredients(int foodId)
+        {
+            var listNums = new List<SelectListItem>();
+            var ingredients = foodRepository.GetAllProducts(foodId);
 
             foreach (var ingredient in ingredients)
             {

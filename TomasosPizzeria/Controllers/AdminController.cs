@@ -194,9 +194,35 @@ namespace TomasosPizzeria.Controllers
         public IActionResult GetFoodDetails(FoodManageViewModel model)
         {
             model.Food = foodRepository.GetFoodById(model.FoodId);
+            model.FoodCategory = foodRepository.GetFoodCategory(model.FoodId);
+            model.CategorySelectList = selectService.GetListCategory(model.FoodCategory.Beskrivning);
+            model.IngredientSelectList = selectService.GetListIngredients();
+            model.FoodIngredientSelectList = selectService.GetListIngredients(model.FoodId);
+    
+
             return ViewComponent("FoodDetails", model);
         }
 
+        [HttpPost]
+        public IActionResult UpdateFood(FoodManageViewModel model)
+        {
+            foodRepository.UpdateFood(model.Food);
+            return RedirectToAction("GetFoodDetails", model);
+        }
+
+        [HttpPost]
+        public IActionResult AddIngredient(FoodManageViewModel model)
+        {
+            foodRepository.AddIngredient(model.FoodId, model.IngredientId);
+            return RedirectToAction("GetFoodDetails",model);
+        }
+
+        [HttpPost]
+        public IActionResult RemoveIngredient(FoodManageViewModel model)
+        {
+            foodRepository.RemoveIngredient(model.FoodId, model.IngredientId);
+            return RedirectToAction("GetFoodDetails", model);
+        }
 
     }
 }

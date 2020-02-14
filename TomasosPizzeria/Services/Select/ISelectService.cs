@@ -11,7 +11,9 @@ namespace TomasosPizzeria.Services
     {
         List<SelectListItem> GetListNumbers(int start, int stop);
         List<SelectListItem> GetListFoods();
-        List<SelectListItem> GetListCategory();
+        List<SelectListItem> GetListCategory(string defaultValue = null);
         List<SelectListItem> GetListIngredients();
+
+        List<SelectListItem> GetListIngredients(int foodId);
     }
 }

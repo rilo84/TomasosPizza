@@ -15,6 +15,20 @@ namespace TomasosPizzeria.Repositories
             _context = context;
         }
 
+        public void AddIngredient(int foodId, int ingredientId)
+        {
+            var foodIngredients = _context.MatrattProdukt.Where(f => f.MatrattId == foodId).ToList();
+            var isInFood = _context.MatrattProdukt.Where(f => f.MatrattId == foodId && f.ProduktId == ingredientId).Any();
+            
+            if (!isInFood)
+            {
+                var ingredient = new MatrattProdukt { MatrattId = foodId, ProduktId = ingredientId };
+                _context.MatrattProdukt.Add(ingredient);
+                _context.SaveChanges();
+            }
+            
+        }
+
         public List<MatrattTyp> GetAllCategories()
         {
             return _context.MatrattTyp.ToList();
@@ -30,9 +44,19 @@ namespace TomasosPizzeria.Repositories
             return _context.Produkt.ToList();
         }
 
-        public Matratt GetFoodById(int Id)
+        public List<Produkt> GetAllProducts(int foodId)
         {
-            return _context.Matratt.FirstOrDefault(food => food.MatrattId == Id);
+            return _context.Matratt.Where(f => f.MatrattId == foodId).SelectMany(f => f.MatrattProdukt).Select(p => p.Produkt).ToList();
+        }
+
+        public Matratt GetFoodById(int id)
+        {
+            return _context.Matratt.FirstOrDefault(food => food.MatrattId == id);
+        }
+
+        public MatrattTyp GetFoodCategory(int foodId)
+        { 
+            return _context.Matratt.Where(f => f.MatrattId == foodId).Select(f => f.MatrattTypNavigation).FirstOrDefault();
         }
 
         public Menu GetMenu()
@@ -49,6 +73,20 @@ namespace TomasosPizzeria.Repositories
             }
 
             return menu;
+        }
+
+        public void RemoveIngredient(int foodId, int ingredientId)
+        {
+            var ingredient = _context.MatrattProdukt.Where(f => f.MatrattId == foodId && f.ProduktId == ingredientId).FirstOrDefault();
+            _context.MatrattProdukt.Remove(ingredient);
+            _context.SaveChanges();
+            
+        }
+
+        public void UpdateFood(Matratt food)
+        {
+            _context.Matratt.Update(food);
+            _context.SaveChanges();
         }
 
         private void AddCategories(Menu menu)

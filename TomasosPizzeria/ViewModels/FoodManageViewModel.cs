@@ -13,7 +13,11 @@ namespace TomasosPizzeria.ViewModels
         public List<SelectListItem> CategorySelectList { get; set; }
         public List<SelectListItem> FoodSelectList { get; set; }
         public List<SelectListItem> IngredientSelectList { get; set; }
+
+        public List<SelectListItem> FoodIngredientSelectList { get; set; }
         public int FoodId { get; set; }
+        public MatrattTyp FoodCategory { get; set; }
         public Matratt Food { get; set; }
+        public int IngredientId { get; set; }
     }
 }
