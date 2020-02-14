@@ -92,6 +92,7 @@ namespace TomasosPizzeria.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateRole(RoleViewModel model)
         {
             if (ModelState.IsValid)
@@ -109,6 +110,7 @@ namespace TomasosPizzeria.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> UpdateUserRole(UserViewModel model)
         {
             if (ModelState.IsValid)
@@ -198,16 +200,19 @@ namespace TomasosPizzeria.Controllers
             model.CategorySelectList = selectService.GetListCategory(model.FoodCategory.Beskrivning);
             model.IngredientSelectList = selectService.GetListIngredients();
             model.FoodIngredientSelectList = selectService.GetListIngredients(model.FoodId);
-    
+            model.IngredientName = "test";
 
             return ViewComponent("FoodDetails", model);
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult UpdateFood(FoodManageViewModel model)
         {
             if (ModelState.IsValid)
             {
+                model.Food.MatrattNamn = model.FoodName;
+                model.Food.Pris = model.FoodPrice;
                 foodRepository.UpdateFood(model.Food);
                 return RedirectToAction("GetFoodDetails", model);
             }
@@ -216,6 +221,7 @@ namespace TomasosPizzeria.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult AddIngredient(FoodManageViewModel model)
         {
             foodRepository.AddIngredient(model.FoodId, model.IngredientId);
@@ -223,6 +229,7 @@ namespace TomasosPizzeria.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult RemoveIngredient(FoodManageViewModel model)
         {
             foodRepository.RemoveIngredient(model.FoodId, model.IngredientId);
@@ -230,20 +237,33 @@ namespace TomasosPizzeria.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult CreateIngredient(FoodManageViewModel model)
         {
-            foodRepository.CreateIngredient(model.Food.MatrattNamn);
+            if (ModelState.IsValid)
+            {
+                foodRepository.CreateIngredient(model.IngredientName);
+                return RedirectToAction("GetFoodDetails", model);
+            }
 
-            return RedirectToAction("GetFoodDetails", model);
+            return View();
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult CreateFood(FoodManageViewModel model)
         {
-            foodRepository.CreateFood(model.Food);
-            model.Food = foodRepository.GetFoodByName(model.Food.MatrattNamn);
+            if (ModelState.IsValid)
+            {
+                model.Food.MatrattNamn = model.FoodName;
+                model.Food.Pris = model.FoodPrice;
+                foodRepository.CreateFood(model.Food);
+                model.Food = foodRepository.GetFoodByName(model.Food.MatrattNamn);
+                return RedirectToAction("ManageFoods");
+            }
 
-            return RedirectToAction("ManageFoods");
+            return View();
+            
         }
 
     }

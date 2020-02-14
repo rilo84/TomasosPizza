@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace TomasosPizzeria.Models
 {
@@ -11,6 +12,7 @@ namespace TomasosPizzeria.Models
         }
 
         public int ProduktId { get; set; }
+
         public string ProduktNamn { get; set; }
 
         public virtual ICollection<MatrattProdukt> MatrattProdukt { get; set; }

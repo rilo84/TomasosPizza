@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace TomasosPizzeria.Models
 {
@@ -12,6 +13,7 @@ namespace TomasosPizzeria.Models
         }
 
         public int MatrattId { get; set; }
+        
         public string MatrattNamn { get; set; }
         public string Beskrivning { get; set; }
         public int Pris { get; set; }

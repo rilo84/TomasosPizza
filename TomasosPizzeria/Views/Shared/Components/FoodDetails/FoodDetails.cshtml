@@ -5,14 +5,15 @@
           data-ajax-mode="replace"
           data-ajax-update="#foodDetails">
         <input type="hidden" asp-for="Food.MatrattId" value="@Model.FoodId" />
-        <input type="hidden" asp-for="FoodId" value="@Model.FoodId" />
+
         <div class="form-group">
             <label>Kategori:</label>
             <select class="form-control" asp-items="@Model.CategorySelectList" asp-for="Food.MatrattTyp"></select>
         </div>
         <div class="form-group">
             <label>Namn:</label>
-            <input type="text" class="form-control" asp-for="Food.MatrattNamn">
+            <input type="text" class="form-control" asp-for="FoodName" value="@Model.Food.MatrattNamn" />
+            <span asp-validation-for="FoodName"></span>
         </div>
         <div class="form-group">
             <label>Beskrivning:</label>
@@ -20,7 +21,8 @@
         </div>
         <div class="form-group">
             <label>Pris:</label>
-            <input type="text" class="form-control" asp-for="Food.Pris">
+            <input type="text" class="form-control" asp-for="FoodPrice" value="@Model.Food.Pris" />
+            <span asp-validation-for="FoodPrice"></span>
         </div>
         <input type="submit" class="btn btn-danger" value="Uppdatera maträtt" />
     </form>

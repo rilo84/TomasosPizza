@@ -18,10 +18,20 @@ namespace TomasosPizzeria.ViewModels
         public List<SelectListItem> FoodIngredientSelectList { get; set; }
         public int FoodId { get; set; }
         public MatrattTyp FoodCategory { get; set; }
-
-        [Required]
-        public Matratt Food { get; set; }
+        
         public int IngredientId { get; set; }
+        public Matratt Food { get; set; }
+
+        [Required(ErrorMessage = "Pris är obligatoriskt")]
+        public int FoodPrice { get; set; }
+
+        [Required(ErrorMessage = "Maträttens namn är obligatoriskt")]
+        [StringLength(50, ErrorMessage = "Maträttens namn får vara max 50 tecken")]
+        public string FoodName { get; set; }
+
+        [Required(ErrorMessage = "Ingrediensnamn är obligatoriskt")]
+        [StringLength(50, ErrorMessage = "Ingrediensnamn får vara max 50 tecken")]
+        public string IngredientName { get; set; }
 
     }
 }

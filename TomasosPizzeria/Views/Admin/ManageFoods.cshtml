@@ -48,7 +48,8 @@
         </div>
         <div class="form-group">
             <label>Namn:</label>
-            <input type="text" class="form-control" asp-for="Food.MatrattNamn">
+            <input type="text" class="form-control" asp-for="FoodName">
+            <span asp-validation-for="FoodName"></span>
         </div>
         <div class="form-group">
             <label>Beskrivning:</label>
@@ -56,7 +57,8 @@
         </div>
         <div class="form-group">
             <label>Pris:</label>
-            <input type="text" class="form-control" asp-for="Food.Pris">
+            <input type="text" class="form-control" asp-for="FoodPrice" value="">
+            <span asp-validation-for="FoodPrice"></span>
         </div>
         <input type="submit" class="btn btn-danger" value="Skapa maträtt" />
     </form>
@@ -77,9 +79,10 @@
             <div class="form-group">
                 <input type="hidden" asp-for="FoodId" value="@Model.FoodId" />
                 <label>Ange namn på ingrediens:</label>
-                <input type="text" class="form-control" asp-for="Food.MatrattNamn" />
-                <button type="submit" class="btn btn-danger">Skapa ingrediens</button>
+                <input type="text" class="form-control" asp-for="IngredientName" />
+                <span asp-validation-for="IngredientName"></span>
             </div>
+            <button type="submit" class="btn btn-danger">Skapa ingrediens</button>
         </form>
     </div>
 </div>
