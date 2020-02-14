@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using TomasosPizzeria.Models;
@@ -17,7 +18,10 @@ namespace TomasosPizzeria.ViewModels
         public List<SelectListItem> FoodIngredientSelectList { get; set; }
         public int FoodId { get; set; }
         public MatrattTyp FoodCategory { get; set; }
+
+        [Required]
         public Matratt Food { get; set; }
         public int IngredientId { get; set; }
+
     }
 }

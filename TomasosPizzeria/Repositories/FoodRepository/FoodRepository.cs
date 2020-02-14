@@ -29,29 +29,63 @@ namespace TomasosPizzeria.Repositories
             
         }
 
+        public void CreateFood(Matratt food)
+        {
+            var foodExists = _context.Matratt.Where(f => f.MatrattNamn == food.MatrattNamn).Any();
+
+            if (!foodExists)
+            {
+                _context.Matratt.Add(food);
+                _context.SaveChanges();
+            }
+        }
+
+        public void CreateIngredient(string name)
+        {
+            var newProduct = new Produkt { ProduktNamn = name };
+            var exists = _context.Produkt.Where(p => p.ProduktNamn == name).Any();
+
+            if (!exists)
+            {
+                _context.Produkt.Add(newProduct);
+                _context.SaveChanges();
+            }
+            
+        }
+
         public List<MatrattTyp> GetAllCategories()
         {
-            return _context.MatrattTyp.ToList();
+            return _context.MatrattTyp.OrderBy(c => c.Beskrivning).ToList();
         }
 
         public List<Matratt> GetAllFoods()
         {
-            return _context.Matratt.ToList();
+            return _context.Matratt.OrderBy(f => f.MatrattNamn).ToList();
         }
 
         public List<Produkt> GetAllProducts()
         {
-            return _context.Produkt.ToList();
+            return _context.Produkt.OrderBy(p => p.ProduktNamn).ToList();
         }
 
         public List<Produkt> GetAllProducts(int foodId)
         {
-            return _context.Matratt.Where(f => f.MatrattId == foodId).SelectMany(f => f.MatrattProdukt).Select(p => p.Produkt).ToList();
+            return _context.Matratt
+                .Where(f => f.MatrattId == foodId)
+                .SelectMany(f => f.MatrattProdukt)
+                .Select(p => p.Produkt)
+                .OrderBy(p => p.ProduktNamn)
+                .ToList();
         }
 
         public Matratt GetFoodById(int id)
         {
             return _context.Matratt.FirstOrDefault(food => food.MatrattId == id);
+        }
+
+        public Matratt GetFoodByName(string name)
+        {
+            return _context.Matratt.FirstOrDefault(food => food.MatrattNamn == name);
         }
 
         public MatrattTyp GetFoodCategory(int foodId)

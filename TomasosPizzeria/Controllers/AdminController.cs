@@ -206,8 +206,13 @@ namespace TomasosPizzeria.Controllers
         [HttpPost]
         public IActionResult UpdateFood(FoodManageViewModel model)
         {
-            foodRepository.UpdateFood(model.Food);
-            return RedirectToAction("GetFoodDetails", model);
+            if (ModelState.IsValid)
+            {
+                foodRepository.UpdateFood(model.Food);
+                return RedirectToAction("GetFoodDetails", model);
+            }
+
+            return View();
         }
 
         [HttpPost]
@@ -222,6 +227,23 @@ namespace TomasosPizzeria.Controllers
         {
             foodRepository.RemoveIngredient(model.FoodId, model.IngredientId);
             return RedirectToAction("GetFoodDetails", model);
+        }
+
+        [HttpPost]
+        public IActionResult CreateIngredient(FoodManageViewModel model)
+        {
+            foodRepository.CreateIngredient(model.Food.MatrattNamn);
+
+            return RedirectToAction("GetFoodDetails", model);
+        }
+
+        [HttpPost]
+        public IActionResult CreateFood(FoodManageViewModel model)
+        {
+            foodRepository.CreateFood(model.Food);
+            model.Food = foodRepository.GetFoodByName(model.Food.MatrattNamn);
+
+            return RedirectToAction("ManageFoods");
         }
 
     }

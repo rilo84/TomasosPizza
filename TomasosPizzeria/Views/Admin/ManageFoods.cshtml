@@ -40,7 +40,27 @@
         </div>
     </div>
 
-    <div id="createFood">hej</div>
+    <div id="createFood">
+        <form asp-action="CreateFood" method="post">
+        <div class="form-group">
+            <label>Kategori:</label>
+            <select class="form-control" asp-items="@Model.CategorySelectList" asp-for="Food.MatrattTyp"></select>
+        </div>
+        <div class="form-group">
+            <label>Namn:</label>
+            <input type="text" class="form-control" asp-for="Food.MatrattNamn">
+        </div>
+        <div class="form-group">
+            <label>Beskrivning:</label>
+            <textarea class="form-control" asp-for="Food.Beskrivning" rows="3"></textarea>
+        </div>
+        <div class="form-group">
+            <label>Pris:</label>
+            <input type="text" class="form-control" asp-for="Food.Pris">
+        </div>
+        <input type="submit" class="btn btn-danger" value="Skapa maträtt" />
+    </form>
+    </div>
 
     <div class="row">
         <div class="col mt-3">
@@ -48,6 +68,19 @@
         </div>
     </div>
 
-    <div id="createIngredient">hej</div>
+    <div id="createIngredient">
+        <form asp-action="CreateIngredient"
+              data-ajax="true"
+              data-ajax-method="POST"
+              data-ajax-mode="replace"
+              data-ajax-update="#foodDetails">
+            <div class="form-group">
+                <input type="hidden" asp-for="FoodId" value="@Model.FoodId" />
+                <label>Ange namn på ingrediens:</label>
+                <input type="text" class="form-control" asp-for="Food.MatrattNamn" />
+                <button type="submit" class="btn btn-danger">Skapa ingrediens</button>
+            </div>
+        </form>
+    </div>
 </div>
 

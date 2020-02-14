@@ -5,6 +5,7 @@
           data-ajax-mode="replace"
           data-ajax-update="#foodDetails">
         <input type="hidden" asp-for="Food.MatrattId" value="@Model.FoodId" />
+        <input type="hidden" asp-for="FoodId" value="@Model.FoodId" />
         <div class="form-group">
             <label>Kategori:</label>
             <select class="form-control" asp-items="@Model.CategorySelectList" asp-for="Food.MatrattTyp"></select>
@@ -36,15 +37,15 @@
         <button type="submit" class="btn btn-danger">Ta bort ingrediens</button>
     </form>
 
-<form asp-action="AddIngredient" 
-      data-ajax="true" 
-      data-ajax-method="POST" 
-      data-ajax-mode="replace"
-      data-ajax-update="#foodDetails">
-    <div class="form-group">
-        <input type="hidden" asp-for="FoodId" value="@Model.FoodId" />
-        <label>Lägg till ingrediens:</label>
-        <select id="listIngredients" class="form-control" asp-for="IngredientId" asp-items="@Model.IngredientSelectList"></select>
+    <form asp-action="AddIngredient"
+          data-ajax="true"
+          data-ajax-method="POST"
+          data-ajax-mode="replace"
+          data-ajax-update="#foodDetails">
+        <div class="form-group">
+            <input type="hidden" asp-for="FoodId" value="@Model.FoodId" />
+            <label>Lägg till ingrediens:</label>
+            <select id="listIngredients" class="form-control" asp-for="IngredientId" asp-items="@Model.IngredientSelectList"></select>
+        </div>
         <button type="submit" class="btn btn-danger">Lägg till</button>
-    </div>
-</form>
+    </form>

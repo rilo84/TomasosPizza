@@ -11,6 +11,7 @@ namespace TomasosPizzeria.Repositories
     {
         Menu GetMenu();
         Matratt GetFoodById(int id);
+        Matratt GetFoodByName(string name);
         MatrattTyp GetFoodCategory(int foodId);
         List<Matratt> GetAllFoods();
         List<MatrattTyp> GetAllCategories();
@@ -19,5 +20,7 @@ namespace TomasosPizzeria.Repositories
         void UpdateFood(Matratt food);
         void AddIngredient(int foodId, int ingredientId);
         void RemoveIngredient(int foodId, int ingredientId);
+        void CreateFood(Matratt food);
+        void CreateIngredient(string name);
     }
 }
