@@ -9,11 +9,13 @@ namespace TomasosPizzeria.ViewModels
 {
     public class LoginViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "Användarnamn är obligatoriskt")]
+        [StringLength(20, ErrorMessage = "Användarnamn får vara max 20 tecken")]
         [DisplayName("Användarnamn:")]
         public string AnvandarNamn { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Lösenord är obligatoriskt")]
+        [StringLength(20, ErrorMessage = "Lösenord får vara max 20 tecken")]
         [DisplayName("Lösenord:")]
         public string Losenord { get; set; }
     }

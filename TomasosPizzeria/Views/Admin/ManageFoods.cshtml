@@ -28,6 +28,9 @@
               data-ajax-method="GET"
               data-ajax-mode="replace"
               data-ajax-update="#foodDetails">
+            <input type="hidden" asp-for="IngredientName" value="valid" />
+            <input type="hidden" asp-for="FoodName" value="valid" />
+            <input type="hidden" asp-for="FoodPrice" value="1" />
             <select class="form-control" asp-for=FoodId asp-items="@Model.FoodSelectList"></select>
             <input type="submit" class="btn btn-danger" value="Redigera" />
         </form>

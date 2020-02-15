@@ -1,21 +1,17 @@
 ﻿@model LoginViewModel;
 
 @{
-    ViewBag.Title = "Ny Kund";
+    ViewBag.Title = "Logga in";
 }
 
 @section style{
     <link rel="stylesheet" href="~/css/NewCustomer.css" />
 }
 
-<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.12.4.min.js"></script>
-<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.17.0/jquery.validate.min.js"></script>
-<script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.6/jquery.validate.unobtrusive.min.js"></script>
-
 <div class="col-sm">
     <div id="newCustomerContainer">
         <h1>Logga In</h1>
-        <form id="newCustomer" asp-controller="Account" asp-action="Login" method="post">
+            <form id="newCustomer" asp-controller="Account" asp-action="Login" method="post" class="d-flex flex-column align-items-center">
                 <div class="form-group">
                     <label asp-for="AnvandarNamn"></label>
                     <input asp-for="AnvandarNamn" class="form-control" type="text" />
@@ -26,9 +22,9 @@
                     <input asp-for="Losenord" class="form-control" type="text" />
                     <span asp-validation-for="Losenord"></span>
                 </div>
-            <div id="saveBtnContainer">
-                <button type="submit" class="btn btn-danger">Logga In</button>
-            </div>
-        </form>
+                <div id="saveBtnContainer">
+                    <button type="submit" class="btn btn-danger">Logga In</button>
+                </div>
+            </form>
     </div>
 </div>

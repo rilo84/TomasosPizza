@@ -17,11 +17,13 @@ namespace TomasosPizzeria.Controllers
     {
         private readonly IUserRepository userRepository;
         private readonly ISessionService sessionService;
+        private readonly IOrderRepository orderRepository;
 
-        public AccountController(IUserRepository userRepository, ISessionService sessionService)
+        public AccountController(IUserRepository userRepository, ISessionService sessionService, IOrderRepository orderRepository)
         {
             this.userRepository = userRepository;
             this.sessionService = sessionService;
+            this.orderRepository = orderRepository;
         }
 
         [Route("Register")]
@@ -103,8 +105,21 @@ namespace TomasosPizzeria.Controllers
         [HttpGet]
         public IActionResult CustomerHome()
         {
-            var model = sessionService.GetUser();
+            var model = new AdminOrderViewModel();
+            model.User = sessionService.GetUser();
+            model.Orders = orderRepository.GetAllCustomerOrders(model.User.Id);
             return View(model);
+        }
+
+        [HttpGet]
+        public IActionResult OrderInfo(int orderId)
+        {
+            var model = new OrderDetailsViewModel();
+
+            model.Foods = orderRepository.GetOrderFoodDetails(orderId);
+            model.OrderId = orderId;
+
+            return ViewComponent("OrderInfo", model);
         }
     }
 }

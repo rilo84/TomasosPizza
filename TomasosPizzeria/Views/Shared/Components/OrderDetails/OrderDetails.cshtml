@@ -9,8 +9,11 @@
             <th scope="col">Totalbelopp</th>
             <th scope="col">Kund</th>
             <th scope="col">Detaljer</th>
-            <th scope="col">Ändra status</th>
-            <th></th>
+            @if (User.IsInRole("Admin"))
+            { 
+                <th scope="col">Ändra status</th>
+                <th></th>
+            }
         </tr>
     </thead>
     <tbody>
@@ -23,7 +26,7 @@
             <td>@order.Totalbelopp</td>
             <td>@userManager.Users.Where(u => u.Id == order.KundId).Select(u => u.Name).FirstOrDefault()</td>
             <td>
-                <a asp-controller="Admin"
+                <a 
                    asp-action="OrderInfo"
                    asp-route-OrderId="@order.BestallningId"
                    data-ajax="true"
@@ -74,8 +77,12 @@
             <th scope="col">Totalbelopp</th>
             <th scope="col">Kund</th>
             <th scope="col">Detaljer</th>
-            <th scope="col">Ändra status</th>
-            <th scope="col"></th>
+            @if (User.IsInRole("Admin"))
+            {
+                <th scope="col">Ändra status</th>
+                <th scope="col"></th>
+            }
+
         </tr>
     </thead>
     <tbody>
@@ -88,7 +95,7 @@
             <td>@order.Totalbelopp</td>
             <td>@userManager.Users.Where(u => u.Id == order.KundId).Select(u => u.Name).FirstOrDefault()</td>
             <td>
-                <a asp-controller="Admin"
+                <a 
                    asp-action="OrderInfo"
                    asp-route-OrderId="@order.BestallningId"
                    data-ajax="true"

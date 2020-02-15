@@ -149,7 +149,7 @@ namespace TomasosPizzeria.Controllers
             }
             else
                 model.Orders = orderRepository.GetAllCustomerOrders(model.UserId);
-            
+
             return ViewComponent("OrderDetails", model);
         }
 
@@ -200,7 +200,6 @@ namespace TomasosPizzeria.Controllers
             model.CategorySelectList = selectService.GetListCategory(model.FoodCategory.Beskrivning);
             model.IngredientSelectList = selectService.GetListIngredients();
             model.FoodIngredientSelectList = selectService.GetListIngredients(model.FoodId);
-            model.IngredientName = "test";
 
             return ViewComponent("FoodDetails", model);
         }

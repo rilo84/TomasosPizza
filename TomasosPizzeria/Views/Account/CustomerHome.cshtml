@@ -1,4 +1,4 @@
-﻿@model ApplicationUser
+﻿@model AdminOrderViewModel
 
 @{
     ViewBag.Title = "Kundsidan";
@@ -11,14 +11,42 @@
 <div class="container d-flex flex-column align-items-center">
     <div class="row">
         <div class="col mt-5">
-            <h1>Välkommen @Model.Name</h1>
+            <h1>Välkommen @Model.User.Name</h1>
         </div>
     </div>
 
     <div class="row">
         <div class="col mt-3">
-            <a href="#" class="btn btn-danger customerHomeBtn" role="button" aria-pressed="true">Beställ mat</a>
+            <h3>Antal ordrar: @Model.Orders.Count()</h3>
+            @if (User.IsInRole("PremiumUser"))
+            {
+                <h3>Konto: Premium</h3>
+                <p>Som premiumanvändare samlar du bonuspoäng och får mängdrabatt.</p>
+                <p>För varje rätt du beställer får du 10 bonsupoäng och när du kommit upp till 100 bjuder vi på den billigaste rätten</p>
+                <p>Utöver detta får du alltid 20% rabatt när du köper minst 4 pizzor</p>
+                <h3>Nuvarande bonuspoäng: @Model.User.BonusPoints</h3>
+            }
+            else
+            {
+                <h3>Konto: Standard</h3>
+            }
         </div>
+    </div>
+
+    <div class="row">
+        <div class="col mt-3">
+            <a href="@Url.Action("Order", "Order")" class="btn btn-danger customerHomeBtn" role="button" aria-pressed="true">Beställ mat</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col mt-3">
+            <button onclick="toogleDiv('#customerOrders')" class="btn btn-danger customerHomeBtn" role="button" aria-pressed="true">Visa ordrar</button>
+        </div>
+    </div>
+
+    <div id="customerOrders">
+        @await Component.InvokeAsync("OrderDetails", new { model = new AdminOrderViewModel { Orders = @Model.Orders, UserId = @Model.User.Id } })
     </div>
 
     <div class="row">

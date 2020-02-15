@@ -11,6 +11,7 @@ namespace TomasosPizzeria.ViewModels
     public class AdminOrderViewModel
     {
         public List<ApplicationUser> Users { get; set; }
+        public ApplicationUser User { get; set; }
         public List<Bestallning> Orders { get; set; }
         public string UserId { get; set; }
         public int OrderId { get; set; }
