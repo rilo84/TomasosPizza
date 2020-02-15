@@ -18,5 +18,6 @@ namespace TomasosPizzeria.ViewModels
         [StringLength(20, ErrorMessage = "Lösenord får vara max 20 tecken")]
         [DisplayName("Lösenord:")]
         public string Losenord { get; set; }
+
     }
 }

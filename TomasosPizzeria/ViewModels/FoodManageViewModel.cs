@@ -19,8 +19,6 @@ namespace TomasosPizzeria.ViewModels
         
         public int FoodId { get; set; }
         public int IngredientId { get; set; }
-
-        [Required]
         public Matratt Food { get; set; }
 
         [Required(ErrorMessage = "Pris är obligatoriskt")]

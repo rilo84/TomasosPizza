@@ -21,7 +21,7 @@
         </div>
     </div>
 
-    <div id="changeFood">
+    <div id="changeFood" class="mt-3">
         <h5>Välj Maträtt:</h5>
         <form asp-controller="Admin" asp-action="GetFoodDetails"
               data-ajax="true"
@@ -31,8 +31,12 @@
             <input type="hidden" asp-for="IngredientName" value="valid" />
             <input type="hidden" asp-for="FoodName" value="valid" />
             <input type="hidden" asp-for="FoodPrice" value="1" />
-            <select class="form-control" asp-for=FoodId asp-items="@Model.FoodSelectList"></select>
-            <input type="submit" class="btn btn-danger" value="Redigera" />
+            <div class="form-group">
+                <select class="form-control" asp-for=FoodId asp-items="@Model.FoodSelectList"></select>
+            </div>
+            <div class="d-flex justify-content-end">
+                <input type="submit" class="btn btn-danger btn-block" value="Redigera" />
+            </div>
         </form>
         <div id="foodDetails"></div>
     </div>
@@ -45,26 +49,29 @@
 
     <div id="createFood">
         <form asp-action="CreateFood" method="post">
-        <div class="form-group">
-            <label>Kategori:</label>
-            <select class="form-control" asp-items="@Model.CategorySelectList" asp-for="Food.MatrattTyp"></select>
-        </div>
-        <div class="form-group">
-            <label>Namn:</label>
-            <input type="text" class="form-control" asp-for="FoodName">
-            <span asp-validation-for="FoodName"></span>
-        </div>
-        <div class="form-group">
-            <label>Beskrivning:</label>
-            <textarea class="form-control" asp-for="Food.Beskrivning" rows="3"></textarea>
-        </div>
-        <div class="form-group">
-            <label>Pris:</label>
-            <input type="text" class="form-control" asp-for="FoodPrice" value="">
-            <span asp-validation-for="FoodPrice"></span>
-        </div>
-        <input type="submit" class="btn btn-danger" value="Skapa maträtt" />
-    </form>
+            <input type="hidden" asp-for="IngredientName" value="valid" />
+            <div class="form-row mt-3">
+                <div class="form-group m-2">
+                    <label>Kategori:</label>
+                    <select class="form-control" asp-items="@Model.CategorySelectList" asp-for="Food.MatrattTyp"></select>
+                </div>
+                <div class="form-group m-2">
+                    <label>Namn:</label>
+                    <input type="text" class="form-control" asp-for="FoodName">
+                    <span asp-validation-for="FoodName"></span>
+                </div>
+                <div class="form-group m-2">
+                    <label>Pris:</label>
+                    <input type="text" class="form-control" asp-for="FoodPrice" value="">
+                    <span asp-validation-for="FoodPrice"></span>
+                </div>
+            </div>
+            <div class="form-group m-2">
+                <label>Beskrivning:</label>
+                <textarea class="form-control" asp-for="Food.Beskrivning" rows="6"></textarea>
+            </div>
+            <input type="submit" class="btn btn-danger btn-block" value="Skapa maträtt" />
+        </form>
     </div>
 
     <div class="row">
@@ -81,11 +88,13 @@
               data-ajax-update="#foodDetails">
             <div class="form-group">
                 <input type="hidden" asp-for="FoodId" value="@Model.FoodId" />
+                <input type="hidden" asp-for="FoodName" value="valid" />
+                <input type="hidden" asp-for="FoodPrice" value="1" />
                 <label>Ange namn på ingrediens:</label>
                 <input type="text" class="form-control" asp-for="IngredientName" />
                 <span asp-validation-for="IngredientName"></span>
             </div>
-            <button type="submit" class="btn btn-danger">Skapa ingrediens</button>
+            <button type="submit" class="btn btn-danger btn-block">Skapa ingrediens</button>
         </form>
     </div>
 </div>

@@ -83,19 +83,24 @@ namespace TomasosPizzeria.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
-            var result = await userRepository.SignInUser(model);
-
-            if (result.Succeeded)
+            if (ModelState.IsValid)
             {
-                var customer = await userRepository.GetUser(model);
-                sessionService.SetUser(customer);
-               
-                if (await userRepository.IsAdmin(customer))
-                {
-                    return RedirectToAction("Index","Admin");
-                }
+                var result = await userRepository.SignInUser(model);
 
-                return RedirectToAction("CustomerHome");
+                if (result.Succeeded)
+                {
+                    var customer = await userRepository.GetUser(model);
+                    sessionService.SetUser(customer);
+               
+                    if (await userRepository.IsAdmin(customer))
+                    {
+                        return RedirectToAction("Index","Admin");
+                    }
+
+                    return RedirectToAction("CustomerHome");
+                }
+               
+                ModelState.AddModelError(string.Empty, "Fel användarnamn eller lösenord");
             }
 
             return View();
