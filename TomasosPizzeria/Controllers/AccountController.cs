@@ -99,9 +99,10 @@ namespace TomasosPizzeria.Controllers
 
                     return RedirectToAction("CustomerHome");
                 }
-               
+                ViewBag.LoginError = "is-invalid";
                 ModelState.AddModelError(string.Empty, "Fel användarnamn eller lösenord");
             }
+            ViewBag.LoginError = "is-invalid";
 
             return View();
         }

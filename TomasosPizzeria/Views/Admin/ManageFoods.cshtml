@@ -35,7 +35,7 @@
                 <select class="form-control" asp-for=FoodId asp-items="@Model.FoodSelectList"></select>
             </div>
             <div class="d-flex justify-content-end">
-                <input type="submit" class="btn btn-danger btn-block" value="Redigera" />
+                <input type="submit" class="btn btn-dark btn-block" value="Redigera" />
             </div>
         </form>
         <div id="foodDetails"></div>
@@ -70,7 +70,7 @@
                 <label>Beskrivning:</label>
                 <textarea class="form-control" asp-for="Food.Beskrivning" rows="6"></textarea>
             </div>
-            <input type="submit" class="btn btn-danger btn-block" value="Skapa maträtt" />
+            <input type="submit" class="btn btn-dark btn-block" value="Skapa maträtt" />
         </form>
     </div>
 
@@ -94,7 +94,7 @@
                 <input type="text" class="form-control" asp-for="IngredientName" />
                 <span asp-validation-for="IngredientName"></span>
             </div>
-            <button type="submit" class="btn btn-danger btn-block">Skapa ingrediens</button>
+            <button type="submit" class="btn btn-dark btn-block">Skapa ingrediens</button>
         </form>
     </div>
 </div>

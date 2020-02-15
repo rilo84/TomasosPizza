@@ -22,6 +22,7 @@ namespace TomasosPizzeria.ViewModels
         public Matratt Food { get; set; }
 
         [Required(ErrorMessage = "Pris är obligatoriskt")]
+        [RegularExpression(@"^\d+$", ErrorMessage = "Priset måste vara ett heltal")]
         public int FoodPrice { get; set; }
 
         [Required(ErrorMessage = "Maträttens namn är obligatoriskt")]

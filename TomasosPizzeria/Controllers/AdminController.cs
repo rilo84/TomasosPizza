@@ -215,7 +215,7 @@ namespace TomasosPizzeria.Controllers
                 foodRepository.UpdateFood(model.Food);
                 return RedirectToAction("GetFoodDetails", model);
             }
-
+            
             return View();
         }
 

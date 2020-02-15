@@ -16,12 +16,12 @@
 
             <div class="form-group">
                 <label asp-for="AnvandarNamn"></label>
-                <input asp-for="AnvandarNamn" class="form-control" type="text" />
+                <input asp-for="AnvandarNamn" class="form-control @ViewBag.LoginError" type="text" />
                 <span asp-validation-for="AnvandarNamn"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Losenord"></label>
-                <input asp-for="Losenord" class="form-control" type="text" />
+                <input asp-for="Losenord" class="form-control @ViewBag.LoginError" type="text" />
                 <span asp-validation-for="Losenord"></span>
             </div>
             <div id="saveBtnContainer">
