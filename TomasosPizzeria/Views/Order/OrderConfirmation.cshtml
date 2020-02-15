@@ -10,7 +10,7 @@
 
 <div id="confirmationContainer">
     <h1> Tack för din beställing!</h1>
-    <img src="~/images/pizzaorder.svg" width="300px" />
+    <img src="~/images/pizzaorder.svg" id="pizzaImg"/>
     <h4>Du har debiterats @((Model.TotalAmount - Model.Discount - Model.BonusMoney).ToString("C0"))</h4>
     <h3>Snart levereras en rykande färsk pizza hem till dig!</h3>
 </div>

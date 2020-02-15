@@ -18,12 +18,21 @@ namespace TomasosPizzeria.Controllers
         private readonly IUserRepository userRepository;
         private readonly ISessionService sessionService;
         private readonly IOrderRepository orderRepository;
+        private readonly IUserService userService;
+        private readonly UserManager<ApplicationUser> userManager;
 
-        public AccountController(IUserRepository userRepository, ISessionService sessionService, IOrderRepository orderRepository)
+        public AccountController(
+            IUserRepository userRepository, 
+            ISessionService sessionService, 
+            IOrderRepository orderRepository, 
+            IUserService userService, 
+            UserManager<ApplicationUser> userManager)
         {
             this.userRepository = userRepository;
             this.sessionService = sessionService;
             this.orderRepository = orderRepository;
+            this.userService = userService;
+            this.userManager = userManager;
         }
 
         [Route("Register")]
@@ -80,7 +89,7 @@ namespace TomasosPizzeria.Controllers
             {
                 var customer = await userRepository.GetUser(model);
                 sessionService.SetUser(customer);
-
+               
                 if (await userRepository.IsAdmin(customer))
                 {
                     return RedirectToAction("Index","Admin");
@@ -103,11 +112,13 @@ namespace TomasosPizzeria.Controllers
 
         [Route("Minsida")]
         [HttpGet]
-        public IActionResult CustomerHome()
+        public async Task<IActionResult> CustomerHome()
         {
             var model = new AdminOrderViewModel();
-            model.User = sessionService.GetUser();
+            model.User = await userManager.GetUserAsync(User);
             model.Orders = orderRepository.GetAllCustomerOrders(model.User.Id);
+            model.UserInfoModel = userService.ConvertUserToUserInfoModel(model.User);
+
             return View(model);
         }
 
@@ -120,6 +131,51 @@ namespace TomasosPizzeria.Controllers
             model.OrderId = orderId;
 
             return ViewComponent("OrderInfo", model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> UpdateUser(AdminOrderViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await userManager.GetUserAsync(User);
+                user = userService.ConvertUserInfoModelToUser(model.UserInfoModel, user);
+                var updateUser = await userManager.UpdateAsync(user);
+                if (updateUser.Succeeded)
+                {
+                    return RedirectToAction("CustomerHome");
+                }
+            }
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> UpdateAccount(AdminOrderViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await userManager.GetUserAsync(User);
+                user.UserName = model.AccountModel.AnvandarNamn;
+
+                var updateUser = await userManager.UpdateAsync(user);
+
+                if (updateUser.Succeeded && model.AccountModel.NewPassword == null)
+                {
+                    return RedirectToAction("CustomerHome");
+                }
+                else
+                {
+                    var updatePassword = await userManager.ChangePasswordAsync(user, model.AccountModel.Losenord, model.AccountModel.NewPassword);
+                    if (updatePassword.Succeeded)
+                    {
+                        return RedirectToAction("CustomerHome");
+                    }
+                }
+               
+            }
+            return View();
         }
     }
 }

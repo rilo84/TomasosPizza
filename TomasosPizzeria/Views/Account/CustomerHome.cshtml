@@ -6,6 +6,7 @@
 
 @section style{
     <link rel="stylesheet" href="~/css/CustomerPage.css" />
+    <link rel="stylesheet" href="~/css/NewCustomer.css/">
 }
 
 <div class="container d-flex flex-column align-items-center">
@@ -51,7 +52,83 @@
 
     <div class="row">
         <div class="col mt-3">
-            <a href="#" class="btn btn-danger customerHomeBtn" role="button" aria-pressed="true">Ändra uppgifter</a>
+            <button onclick="toogleDiv('#editUserForm')" class="btn btn-danger customerHomeBtn" role="button" aria-pressed="true">Ändra uppgifter</button>
+        </div>
+    </div>
+
+    <div id="editUserForm">
+        <div class="col-sm">
+            <div id="newCustomerContainer">
+                <h2>Ändra användaruppgifter</h2>
+                <form id="newCustomer" asp-controller="Account" asp-action="UpdateUser" method="post">
+                    <div id="inputSection1">
+                        <div class="form-group">
+                            <label asp-for="UserInfoModel.Namn"></label>
+                            <input asp-for="UserInfoModel.Namn" class="form-control" type="text" />
+                            <span asp-validation-for="UserInfoModel.Namn"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="UserInfoModel.Gatuadress"></label>
+                            <input asp-for="UserInfoModel.Gatuadress" class="form-control" type="text" />
+                            <span asp-validation-for="UserInfoModel.Gatuadress"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="UserInfoModel.Postnr"></label>
+                            <input asp-for="UserInfoModel.Postnr" class="form-control" type="text" />
+                            <span asp-validation-for="UserInfoModel.Postnr"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="UserInfoModel.Postort"></label>
+                            <input asp-for="UserInfoModel.Postort" class="form-control" type="text" />
+                            <span asp-validation-for="UserInfoModel.Postort"></span>
+                        </div>
+                    </div>
+                    <div id="inputSection2">
+                        <div class="form-group">
+                            <label class="formItem" asp-for="UserInfoModel.Email"></label>
+                            <input asp-for="UserInfoModel.Email" class="form-control" type="text" />
+                            <span class="errorText" asp-validation-for="UserInfoModel.Email"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="UserInfoModel.Telefon"></label>
+                            <input asp-for="UserInfoModel.Telefon" class="form-control" type="text" />
+                            <span class="errorText" asp-validation-for="UserInfoModel.Telefon"></span>
+                        </div>
+                    </div>
+                    <div id="saveBtnContainer">
+          
+                        <button type="submit" class="btn btn-danger">Ändra</button>
+                    </div>
+                </form>
+                <h2>Ändra kontouppgifter</h2>
+
+                <form id="newCustomer" asp-controller="Account" asp-action="UpdateAccount" method="post">
+                    <div class="form-group">
+                        <label class="formItem" asp-for="AccountModel.AnvandarNamn" ></label>
+                        <input asp-for="AccountModel.AnvandarNamn" value="@Model.User.UserName" class="form-control" type="text" />
+                        <span class="errorText" asp-validation-for="AccountModel.AnvandarNamn"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="AccountModel.Losenord"></label>
+                        <input asp-for="AccountModel.Losenord" class="form-control" type="text" />
+                        <span class="errorText" asp-validation-for="AccountModel.Losenord"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="AccountModel.NewPassword"></label>
+                        <input asp-for="AccountModel.NewPassword" class="form-control" type="text" />
+                        <span class="errorText" asp-validation-for="AccountModel.NewPassword"></span>
+                    </div>
+
+                    <div id="saveBtnContainer">
+                        <button type="submit" class="btn btn-danger">Ändra</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>

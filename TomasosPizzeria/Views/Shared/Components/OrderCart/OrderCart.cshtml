@@ -47,7 +47,7 @@ else
         {
             @if (Model.TotalBonus > 30)
             {
-                <p>Din rabatt: -@Model.Discount.ToString("C0")</p>
+                <p>Din mängdrabatt: -@Model.Discount.ToString("C0")</p>
                 <p>Summa inkl rabatt: @((Model.TotalAmount - Model.Discount).ToString("C0"))</p>
             }
             @if (Model.CurrentBonus >= 100)

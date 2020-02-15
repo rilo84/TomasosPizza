@@ -2,6 +2,7 @@
     width:400px;
 }
 
-#customerOrders{
+#customerOrders, #editUserForm{
     display:none;
+    max-width:600px;
 }

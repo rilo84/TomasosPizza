@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace TomasosPizzeria.ViewModels
 {
-    public class RegisterViewModel
+    public class UserInfoViewModel
     {
         public string Id { get; set; }
 
@@ -41,18 +41,5 @@ namespace TomasosPizzeria.ViewModels
         [StringLength(50, ErrorMessage = "Telefonummer får vara max 50 tecken")]
         [DisplayName("Telefon:")]
         public string Telefon { get; set; }
-
-        [Required(ErrorMessage = "Användarnamn är obligatoriskt")]
-        [StringLength(20, ErrorMessage = "Användarnamn får vara max 20 tecken")]
-        [DisplayName("Användarnamn:")]
-        public string AnvandarNamn { get; set; }
-
-        [Required(ErrorMessage = "Lösenord är obligatoriskt")]
-        [DataType(DataType.Password)]
-        [StringLength(20, ErrorMessage = "Lösenord får vara max 20 tecken")]
-        [DisplayName("Lösenord:")]
-        public string Losenord { get; set; }
-
-
     }
 }
