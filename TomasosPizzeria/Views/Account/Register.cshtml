@@ -11,52 +11,52 @@
 <div class="col-sm">
     <div id="newCustomerContainer">
         <h1>Öppna Konto</h1>
-        <form id="newCustomer" asp-controller="Account" asp-action="Register" method="post">
-            <div id="inputSection1">
+        <form id="newCustomer" asp-controller="Account" asp-action="Register" method="post" class="needs-validation" novalidate>
+            <div class="col">
                 <div class="form-group">
                     <label asp-for="Namn"></label>
-                    <input asp-for="Namn" class="form-control" type="text" />
+                    <input asp-for="Namn" class="form-control" type="text" required />
                     <span asp-validation-for="Namn"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Gatuadress"></label>
-                    <input asp-for="Gatuadress" class="form-control" type="text" />
+                    <input asp-for="Gatuadress" class="form-control" type="text" required />
                     <span asp-validation-for="Gatuadress"></span>
                 </div>
 
                 <div class="form-group">
                     <label asp-for="Postnr"></label>
-                    <input asp-for="Postnr" class="form-control" type="text" />
+                    <input asp-for="Postnr" class="form-control" type="text" required />
                     <span asp-validation-for="Postnr"></span>
                 </div>
 
                 <div class="form-group">
                     <label asp-for="Postort"></label>
-                    <input asp-for="Postort" class="form-control" type="text" />
+                    <input asp-for="Postort" class="form-control" type="text" required />
                     <span asp-validation-for="Postort"></span>
                 </div>
             </div>
-            <div id="inputSection2">
+            <div class="col">
                 <div class="form-group">
                     <label class="formItem" asp-for="Email"></label>
-                    <input asp-for="Email" class="form-control" type="text" />
+                    <input asp-for="Email" class="form-control" type="text" required />
                     <span class="errorText" asp-validation-for="Email"></span>
                 </div>
 
                 <div class="form-group">
                     <label asp-for="Telefon"></label>
-                    <input asp-for="Telefon" class="form-control" type="text" />
+                    <input asp-for="Telefon" class="form-control" type="text" required />
                     <span class="errorText" asp-validation-for="Telefon"></span>
                 </div>
 
                 <div class="form-group">
                     <label asp-for="AnvandarNamn"></label>
-                    <input asp-for="AnvandarNamn" class="form-control" type="text" />
+                    <input asp-for="AnvandarNamn" class="form-control" type="text" required />
                     <span asp-validation-for="AnvandarNamn"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Losenord"></label>
-                    <input asp-for="Losenord" class="form-control" type="password" />
+                    <input asp-for="Losenord" class="form-control" type="password" required />
                     <span asp-validation-for="Losenord"></span>
                 </div>
             </div>
@@ -66,3 +66,4 @@
         </form>
     </div>
 </div>
+<script src="~/scripts/validation.js"></script>

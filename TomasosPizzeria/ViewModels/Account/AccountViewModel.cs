@@ -17,13 +17,15 @@ namespace TomasosPizzeria.ViewModels
         public string AnvandarNamn { get; set; }
 
         [Required(ErrorMessage = "Lösenord är obligatoriskt")]
+        [RegularExpression(@"(?=^.{6,20}$)(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?!.*\s).*$", ErrorMessage = "Lösenordet är för enkelt")]
+        [StringLength(20, ErrorMessage = "Lösenord måste vara mellan 6-20 tecken", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [StringLength(20, ErrorMessage = "Lösenord får vara max 20 tecken")]
         [DisplayName("Lösenord:")]
         public string Losenord { get; set; }
 
         [DataType(DataType.Password)]
-        [StringLength(20, ErrorMessage = "Lösenord får vara max 20 tecken")]
+        [RegularExpression(@"(?=^.{6,20}$)(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?!.*\s).*$", ErrorMessage = "Lösenordet är för enkelt")]
+        [StringLength(20, ErrorMessage = "Lösenord måste vara mellan 6-20 tecken", MinimumLength = 6)]
         [DisplayName("Nytt lösenord:")]
         public string NewPassword { get; set; }
 

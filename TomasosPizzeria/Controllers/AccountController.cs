@@ -70,9 +70,15 @@ namespace TomasosPizzeria.Controllers
 
                         return RedirectToAction("CustomerHome");
                     }
-                    
+                   
                 }
+                foreach (var error in userCreationResult.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+
             }
+           
             return View();
         }
 
@@ -107,6 +113,7 @@ namespace TomasosPizzeria.Controllers
                 }
 
                 ModelState.AddModelError(string.Empty, "Fel användarnamn eller lösenord");
+                ViewBag.Validation = "is-invalid";
             }
 
             return View();
