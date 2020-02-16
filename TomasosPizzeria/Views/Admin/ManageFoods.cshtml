@@ -48,7 +48,7 @@
     </div>
 
     <div id="createFood">
-        <form asp-action="CreateFood" method="post">
+        <form asp-action="CreateFood" method="post" class="needs-validation" novalidate>
             <input type="hidden" asp-for="IngredientName" value="valid" />
             <div class="form-row mt-3">
                 <div class="form-group m-2">
@@ -57,12 +57,12 @@
                 </div>
                 <div class="form-group m-2">
                     <label>Namn:</label>
-                    <input type="text" class="form-control" asp-for="FoodName">
+                    <input type="text" class="form-control" asp-for="FoodName" required>
                     <span asp-validation-for="FoodName"></span>
                 </div>
                 <div class="form-group m-2">
                     <label>Pris:</label>
-                    <input type="text" class="form-control" asp-for="FoodPrice" value="">
+                    <input type="number" class="form-control" asp-for="FoodPrice" value="" required>
                     <span asp-validation-for="FoodPrice"></span>
                 </div>
             </div>
@@ -85,17 +85,19 @@
               data-ajax="true"
               data-ajax-method="POST"
               data-ajax-mode="replace"
-              data-ajax-update="#foodDetails">
+              data-ajax-update="#foodDetails"
+              class="needs-validation" novalidate>
             <div class="form-group">
-                <input type="hidden" asp-for="FoodId" value="@Model.FoodId" />
+                <input type="hidden" asp-for="FoodId" value="1" />
                 <input type="hidden" asp-for="FoodName" value="valid" />
                 <input type="hidden" asp-for="FoodPrice" value="1" />
                 <label>Ange namn på ingrediens:</label>
-                <input type="text" class="form-control" asp-for="IngredientName" />
+                <input type="text" class="form-control" asp-for="IngredientName" required/>
                 <span asp-validation-for="IngredientName"></span>
             </div>
             <button type="submit" class="btn btn-dark btn-block">Skapa ingrediens</button>
         </form>
     </div>
 </div>
+<script src="~/scripts/validation.js"></script>
 
