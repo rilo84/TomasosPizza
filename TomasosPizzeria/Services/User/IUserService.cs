@@ -13,6 +13,7 @@ namespace TomasosPizzeria.Services
         UserInfoViewModel ConvertUserToUserInfoModel(ApplicationUser user);
 
         ApplicationUser ConvertUserInfoModelToUser(UserInfoViewModel model, ApplicationUser user);
+
        
     }
 }

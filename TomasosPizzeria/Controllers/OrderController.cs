@@ -108,14 +108,7 @@ namespace TomasosPizzeria.Controllers
             var user = await userManager.GetUserAsync(User);
             var cart = sessionService.GetCart();
 
-            if(user.BonusPoints >= 100)
-            {
-                user.BonusPoints += cart.TotalBonus - 100;
-            }
-            else
-            {
-                user.BonusPoints += cart.TotalBonus;
-            }
+            cartService.UseBonus(user, cart);
 
             var result = await userManager.UpdateAsync(user);
 

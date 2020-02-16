@@ -10,27 +10,33 @@
 }
 
 <div class="container d-flex flex-column align-items-center">
-    <div class="row">
-        <div class="col mt-5">
-            <h1>Välkommen @Model.User.Name</h1>
-        </div>
-    </div>
 
     <div class="row">
-        <div class="col mt-3">
-            <h3>Antal ordrar: @Model.Orders.Count()</h3>
-            @if (User.IsInRole("PremiumUser"))
-            {
-                <h3>Konto: Premium</h3>
-                <p>Som premiumanvändare samlar du bonuspoäng och får mängdrabatt.</p>
-                <p>För varje rätt du beställer får du 10 bonsupoäng och när du kommit upp till 100 bjuder vi på den billigaste rätten</p>
-                <p>Utöver detta får du alltid 20% rabatt när du köper minst 4 pizzor</p>
-                <h3>Nuvarande bonuspoäng: @Model.User.BonusPoints</h3>
-            }
-            else
-            {
-                <h3>Konto: Standard</h3>
-            }
+        <div class="col mt-5">
+            <div class="jumbotron">
+                <h1 class="display-4 d-flex justify-content-center">Välkommen @Model.User.Name!</h1>
+                <p class="lead">Här är din egna kundsida där du kan göra beställningar, se aktuella ordrar och ändra dina uppgifter.</p>
+                <hr class="my-4">
+                @if (User.IsInRole("PremiumUser"))
+                {
+                    <h4>Användarnivå: Premium</h4>
+                }
+                else
+                {
+                    <h4>Användarnivå: Standard</h4>
+                }
+                <h4>Antal beställningar: @Model.Orders.Count()</h4>
+                @if (User.IsInRole("PremiumUser"))
+                {
+                    <h4>Bonuspoäng: @Model.User.BonusPoints</h4>
+                    <p>
+                        Som premiumanvändare samlar du bonuspoäng och får mängdrabatt.<br />
+                        För varje rätt du beställer får du 10 bonsupoäng och när du kommit upp 
+                        till 100 bjuder vi på den billigaste rätten.<br />
+                        Utöver detta får du alltid 20% rabatt när du köper minst 3 pizzor
+                    </p>
+                }
+            </div>
         </div>
     </div>
 
@@ -99,7 +105,7 @@
                         </div>
                     </div>
                     <div id="saveBtnContainer">
-          
+
                         <button type="submit" class="btn btn-danger">Ändra</button>
                     </div>
                 </form>
@@ -107,7 +113,7 @@
 
                 <form id="newCustomer" asp-controller="Account" asp-action="UpdateAccount" method="post">
                     <div class="form-group">
-                        <label class="formItem" asp-for="AccountModel.AnvandarNamn" ></label>
+                        <label class="formItem" asp-for="AccountModel.AnvandarNamn"></label>
                         <input asp-for="AccountModel.AnvandarNamn" value="@Model.User.UserName" class="form-control" type="text" />
                         <span class="errorText" asp-validation-for="AccountModel.AnvandarNamn"></span>
                     </div>

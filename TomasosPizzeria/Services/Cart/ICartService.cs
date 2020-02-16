@@ -18,5 +18,6 @@ namespace TomasosPizzeria.Services
         void CheckDiscount(CartViewModel model);
         void CheckBonus(CartViewModel model);
         void AddBonus(CartViewModel model);
+        void UseBonus(ApplicationUser user, CartViewModel cart);
     }
 }

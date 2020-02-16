@@ -6,3 +6,7 @@
     display:none;
     max-width:600px;
 }
+
+.jumbotron {
+    background-color: rgba(182, 6, 9, 0.2);
+}

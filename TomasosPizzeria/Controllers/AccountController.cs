@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -13,6 +14,7 @@ using TomasosPizzeria.ViewModels;
 
 namespace TomasosPizzeria.Controllers
 {
+    [Authorize]
     public class AccountController : Controller
     {
         private readonly IUserRepository userRepository;
@@ -35,6 +37,7 @@ namespace TomasosPizzeria.Controllers
             this.userManager = userManager;
         }
 
+        [AllowAnonymous]
         [Route("Register")]
         [HttpGet]
         public IActionResult Register()
@@ -42,6 +45,7 @@ namespace TomasosPizzeria.Controllers
             return View();
         }
 
+        [AllowAnonymous]
         [Route("Register")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -72,6 +76,7 @@ namespace TomasosPizzeria.Controllers
             return View();
         }
 
+        [AllowAnonymous]
         [Route("Login")]
         [HttpGet]
         public IActionResult Login()
@@ -79,6 +84,7 @@ namespace TomasosPizzeria.Controllers
             return View();
         }
 
+        [AllowAnonymous]
         [Route("Login")]
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel model)
@@ -91,18 +97,17 @@ namespace TomasosPizzeria.Controllers
                 {
                     var customer = await userRepository.GetUser(model);
                     sessionService.SetUser(customer);
-               
+
                     if (await userRepository.IsAdmin(customer))
                     {
-                        return RedirectToAction("Index","Admin");
+                        return RedirectToAction("Index", "Admin");
                     }
 
                     return RedirectToAction("CustomerHome");
                 }
-                ViewBag.LoginError = "is-invalid";
+
                 ModelState.AddModelError(string.Empty, "Fel användarnamn eller lösenord");
             }
-            ViewBag.LoginError = "is-invalid";
 
             return View();
         }
@@ -173,7 +178,9 @@ namespace TomasosPizzeria.Controllers
                 }
                 else
                 {
-                    var updatePassword = await userManager.ChangePasswordAsync(user, model.AccountModel.Losenord, model.AccountModel.NewPassword);
+                    var updatePassword = await userManager.ChangePasswordAsync(user, 
+                        model.AccountModel.Losenord, model.AccountModel.NewPassword);
+
                     if (updatePassword.Succeeded)
                     {
                         return RedirectToAction("CustomerHome");

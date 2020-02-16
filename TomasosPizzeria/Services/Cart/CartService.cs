@@ -12,14 +12,9 @@ namespace TomasosPizzeria.Services
     public class CartService : ICartService
     {
         private readonly IFoodRepository foodRepository;
-        private readonly ISessionService sessionService;
-        private readonly IUserRepository userRepository;
-
-        public CartService(IFoodRepository foodRepository, ISessionService sessionService, IUserRepository userRepository)
+        public CartService(IFoodRepository foodRepository)
         {
             this.foodRepository = foodRepository;
-            this.sessionService = sessionService;
-            this.userRepository = userRepository;
         }
 
         public void AddBonus(CartViewModel model)
@@ -62,7 +57,7 @@ namespace TomasosPizzeria.Services
             int amountFood = 0;
             model.Food.ForEach(f => amountFood += f.OrderAmount);
 
-            if (amountFood > 3)
+            if (amountFood > 2)
             {
                 model.Discount = model.TotalAmount * 0.2m;
             }
@@ -104,6 +99,18 @@ namespace TomasosPizzeria.Services
                 model.Cart.Food.Remove(food);
             }
                 
+        }
+
+        public void UseBonus(ApplicationUser user, CartViewModel cart)
+        {
+            if (user.BonusPoints >= 100)
+            {
+                user.BonusPoints += cart.TotalBonus - 100;
+            }
+            else
+            {
+                user.BonusPoints += cart.TotalBonus;
+            }
         }
     }
 }
