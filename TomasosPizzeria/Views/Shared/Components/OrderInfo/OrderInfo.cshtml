@@ -6,7 +6,11 @@
         <th>Maträtt</th>
         <th></th>
         <th></th>
-        <th></th>
+        @if(User.IsInRole("Admin"))
+        {
+            <th></th>
+        }
+        
     </tr>
 
 @foreach (var food in Model.Foods)
@@ -16,7 +20,10 @@
     <td>@food.MatrattNamn</td>
     <td></td>
     <td></td>
-    <td></td>
+    @if (User.IsInRole("Admin"))
+    {
+        <td></td>
+    }
 </tr>
 }
 

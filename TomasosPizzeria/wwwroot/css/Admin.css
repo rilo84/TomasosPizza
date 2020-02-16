@@ -33,3 +33,7 @@
 textarea {
     resize: none;
 }
+
+.manageFoodContainer{
+    margin-bottom:100px;
+}

@@ -4,9 +4,12 @@
 
 #customerOrders, #editUserForm{
     display:none;
-    max-width:600px;
 }
 
 .jumbotron {
     background-color: rgba(182, 6, 9, 0.2);
+}
+
+#mainRow{
+    margin-bottom:100px;
 }
